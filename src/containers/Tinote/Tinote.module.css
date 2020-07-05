@@ -1,0 +1,21 @@
+.Tinote {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.Wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 500px) {
+  .Wrapper {
+    color: red;
+    width: 40%;
+  }
+}

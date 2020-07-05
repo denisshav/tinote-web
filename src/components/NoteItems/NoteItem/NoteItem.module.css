@@ -1,0 +1,39 @@
+.NoteItem {
+  height: 80px;
+  padding: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #ddd;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.Active {
+  background-color: #ccc;
+}
+
+.Title {
+  text-align: start;
+  font-weight: bold;
+  margin: 0;
+}
+
+.Content {
+  text-align: start;
+  color: rgba(#000, 50%);
+  margin: 0;
+}
+
+.Date {
+  text-align: start;
+  color: rgba(#000, 30%);
+  margin: 0;
+}
+
+@media (min-width: 800px) {
+  .NoteItem {
+  padding: 8px;
+  }
+}

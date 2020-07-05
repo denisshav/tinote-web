@@ -1,0 +1,32 @@
+.Toolbar {
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.Search {
+  flex-grow: 2;
+}
+
+.Button {
+  margin-left: 5px;
+  color: yellow;
+  width: 36px;
+  text-align: center;
+}
+
+@media (min-width: 800px) {
+  .Toolbar {
+    height: 100%;
+    background-color: #ccc;
+    padding: 0;
+    width: 50%;
+    flex-grow: 2;
+    flex-direction: row;
+  }
+}

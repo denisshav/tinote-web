@@ -1,0 +1,16 @@
+.NoteEditingToolbar {
+  height: 50px;
+  display: flex;
+  box-sizing: border-box;
+  background-color: #ccc;
+}
+
+@media (min-width: 500px) {
+  .NoteEditingToolbar {
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+  }
+}

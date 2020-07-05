@@ -1,0 +1,33 @@
+.Profile {
+  display: flex;
+  padding: 0;
+  background-color: #ccc;
+  height: 100%;
+  width: 50%;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start; 
+  margin: 0;
+  max-width: 150px;
+  flex-grow: 1;
+}
+
+.Img {
+  margin-left: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.ProfileName {
+  flex-grow: 2;
+  margin-left: 10px;
+  text-align: start;
+}
+
+@media (min-width: 800px) {
+  .Profile {
+    display: flex;
+  }
+}

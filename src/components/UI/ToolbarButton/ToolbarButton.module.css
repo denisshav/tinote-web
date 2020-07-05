@@ -1,0 +1,15 @@
+.ToolbarButton {
+  font-size: 24px;
+  width: 28px;
+  height: 28px;
+  color: black;
+  background-color: white;
+  border-radius: 25%;
+  text-align: center;
+}
+
+.ToolbarButton:hover,
+.Active {
+  background-color: #ccc;
+  border-radius: 25%;
+}

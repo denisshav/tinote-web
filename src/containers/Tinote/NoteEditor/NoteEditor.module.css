@@ -1,0 +1,17 @@
+.NoteEditor {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+@media (min-width: 500px) {
+  .NoteEditor {
+    color: red;
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+  }
+}

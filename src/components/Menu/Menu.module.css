@@ -1,0 +1,13 @@
+.Menu {
+  height: 50px;
+  display: flex;
+  box-sizing: border-box;
+}
+
+@media (min-width: 500px) {
+  .Menu {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+  }
+}
