@@ -9,6 +9,10 @@
   padding: 0 7px;
 }
 
+.Active {
+  background-color: royalblue;
+}
+
 .Icon {
   width: 36px;
   height: 36px;

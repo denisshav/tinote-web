@@ -5,6 +5,7 @@
   display: none;
   flex-grow: 1;
   flex-shrink: 1;
+  box-sizing: border-box;
 }
 
 @media (min-width: 500px) {
@@ -12,6 +13,7 @@
     color: red;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     width: 60px;
   }
 }

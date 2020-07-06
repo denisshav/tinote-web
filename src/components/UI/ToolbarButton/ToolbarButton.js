@@ -10,7 +10,9 @@ const toolbarButton = props => {
   }
 
   return (
-    <div className={classNames}>
+    <div 
+      onClick={props.clicked}
+      className={classNames}>
       <span className={"material-icons"}>
       {props.btnType}
       </span>

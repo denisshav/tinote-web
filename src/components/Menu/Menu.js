@@ -8,7 +8,7 @@ const menu = props => {
   return (
     <div className={classes.Menu}>
       <Profile profileName={"Name"}/>
-      <Toolbar />
+      <Toolbar buttonClicked={props.toolbarButtonClicked}/>
     </div>
   )
 }

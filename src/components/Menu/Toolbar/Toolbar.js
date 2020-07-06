@@ -19,6 +19,7 @@ const toolbar = props => {
       </div>
       <div className={classes.Button}>
       <ToolbarButton 
+      clicked={props.buttonClicked}
       active={false}
       btnType={"note_add"}/>
       </div>

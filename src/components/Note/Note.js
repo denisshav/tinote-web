@@ -4,7 +4,10 @@ import classes from "./Note.module.css"
 
 const note = props => {
   return (
-    <div className={classes.Note} contentEditable={true}>
+    <div 
+      onInputCapture={props.inputHandler}
+      className={classes.Note} 
+      contentEditable={true}>
       {props.content}
     </div>
   )

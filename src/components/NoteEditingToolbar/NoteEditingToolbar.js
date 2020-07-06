@@ -5,20 +5,7 @@ import ToolbarButton from "../UI/ToolbarButton/ToolbarButton"
 
 
 const NoteEditingToolbar = props => {
-  const btns = [
-    {
-      icon: "format_bold",
-      event: {textWeight: "bold"},
-      name: "bold"
-    },
-    {
-      icon: "format_italic",
-      event: {textStyle: "italic"},
-      name: "italic"
-    }
-  ]
-
-  const buttons = btns.map((button, index) => {
+  const buttons = props.buttons.map((button, index) => {
     return <ToolbarButton
       key={index}
       btnType={button.icon}

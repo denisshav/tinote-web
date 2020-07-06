@@ -2,4 +2,7 @@
   flex-grow: 2;
   width: 100%;
   padding: 30px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  max-height: calc(100% - 50px);
 }

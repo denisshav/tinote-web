@@ -9,7 +9,7 @@
   .NoteEditingToolbar {
     height: 50px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-direction: row;
     align-items: center;
   }
