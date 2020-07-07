@@ -48,6 +48,22 @@ const inputText = (state, action) => {
   })
 }
 
+const renameNote = (state, action) => {
+  console.log("Rename reducer")
+  console.log(action)
+  return updateObject(state, {
+    notes: state.notes.map(n => {
+      if (n.id === action.id) {
+        return {
+          ...n,
+          title: action.newName
+        }
+      }
+      return n
+    })
+  })
+}
+
 const fetchNotesStart = (state, action) => {
   return updateObject(state, {
     loading: true,
@@ -98,6 +114,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.ADD_NOTE: return addNote(state, action)
     case actionTypes.MOVE_TO_TRASH_NOTE: return moveToTrashNote(state, action)
     case actionTypes.INPUT_TEXT: return inputText(state, action)
+    case actionTypes.RENAME_NOTE: return renameNote(state, action)
     case actionTypes.FETCH_NOTES_START: return fetchNotesStart(state, action)
     case actionTypes.FETCH_NOTES_SUCCESS:return fetchNotesSuccess(state, action)
     case actionTypes.FETCH_NOTES_FAIL: return fetchNotesFail(state, action)

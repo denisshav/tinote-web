@@ -11,11 +11,14 @@ import thunk from "redux-thunk"
 import tinoteReducer from "./store/reducers/tinote"
 import notesReducer from "./store/reducers/notes"
 import foldersReducer from "./store/reducers/folders"
+import {BrowserRouter} from "react-router-dom"
+import authReducer from "./store/reducers/auth"
 
 const reducers = combineReducers({
     tinote: tinoteReducer,
     notes: notesReducer,
-    folders: foldersReducer
+    folders: foldersReducer,
+    auth: authReducer
   }
 )
 
@@ -27,7 +30,9 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

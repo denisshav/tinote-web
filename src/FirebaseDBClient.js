@@ -1,52 +1,53 @@
-import {isDifferenceBetweenArrays} from "./shared/utility";
-import DB from "./myFirebase"
+import {getDifferenceBetweenArrays} from "./shared/utility";
+import firebase from "./myFirebase"
 
 export class FirebaseDBClient {
   constructor() {
     this.notes = []
     this.folders = []
+    this.db = firebase.firestore()
   }
 
   init() {
   }
 
   getId(collectionName) {
-    return DB.collection(collectionName).doc().id
+    return this.db.collection(collectionName).doc().id
   }
 
   save({notes, folders}) {
     let notesDiff
     let foldersDiff
     if (!notes) {
-      notesDiff = isDifferenceBetweenArrays(this.notes, this.notes)
+      notesDiff = getDifferenceBetweenArrays(this.notes, this.notes)
     } else {
-      notesDiff = isDifferenceBetweenArrays(this.notes, notes)
+      notesDiff = getDifferenceBetweenArrays(this.notes, notes)
     }
     if (!folders) {
-      foldersDiff = isDifferenceBetweenArrays(this.folders, this.folders)
+      foldersDiff = getDifferenceBetweenArrays(this.folders, this.folders)
     } else {
-      foldersDiff = isDifferenceBetweenArrays(this.folders, folders)
+      foldersDiff = getDifferenceBetweenArrays(this.folders, folders)
     }
     if (!notesDiff.isDiffer && !foldersDiff.isDiffer) {
-      console.log("FIREDB ISNT DIFFER")
+      console.log("FIREthis.db ISNT DIFFER")
       return  new Promise(resolve => resolve(true))
     }
 
     return new Promise((resolve, reject)=> {
-      const batch = DB.batch()
+      const batch = this.db.batch()
 
       foldersDiff.deleted.forEach(folder => {
-        const docRef = DB.collection("folders").doc(folder.id);
+        const docRef = this.db.collection("folders").doc(folder.id);
         batch.delete(docRef);
       })
 
       notesDiff.deleted.forEach(note => {
-        const docRef = DB.collection("notes").doc(note.id);
+        const docRef = this.db.collection("notes").doc(note.id);
         batch.delete(docRef);
       })
 
       foldersDiff.updated.forEach(folder => {
-        const docRef = DB.collection("folders").doc(folder.id)
+        const docRef = this.db.collection("folders").doc(folder.id)
         batch.set(docRef, {
           name: folder.name,
           color: folder.color,
@@ -54,7 +55,7 @@ export class FirebaseDBClient {
         })
       })
       notesDiff.updated.forEach(note => {
-        const docRef = DB.collection("notes").doc(note.id)
+        const docRef = this.db.collection("notes").doc(note.id)
         batch.set(docRef, {
           title: note.title,
           content: note.content,
@@ -82,7 +83,7 @@ export class FirebaseDBClient {
 
   get(collection) {
     return new Promise((resolve, reject) => {
-      DB.collection(collection).get().then(querySnapshot => {
+      this.db.collection(collection).get().then(querySnapshot => {
         const docs = []
         querySnapshot.forEach(doc => {
           docs.push({...doc.data(), id: doc.id})

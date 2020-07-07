@@ -26,6 +26,20 @@ const removeFolder = (state, action) => {
   })
 }
 
+const renameFolder = (state, action) => {
+  return updateObject(state, {
+    folders: state.folders.map(n => {
+      if (n.id === action.id) {
+        return {
+          ...n,
+          name: action.newName
+        }
+      }
+      return n
+    })
+  })
+}
+
 const fetchFoldersStart = (state, action) => {
   return updateObject(state, {
     loading: true,
@@ -75,6 +89,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SELECT_FOLDER: return selectFolder(state, action)
     case actionTypes.ADD_FOLDER: return addFolder(state, action)
     case actionTypes.REMOVE_FOLDER: return removeFolder(state, action)
+    case actionTypes.RENAME_FOLDER: return renameFolder(state, action)
     case actionTypes.FETCH_FOLDERS_START: return fetchFoldersStart(state, action)
     case actionTypes.FETCH_FOLDERS_SUCCESS: return fetchFoldersSuccess(state, action)
     case actionTypes.FETCH_FOLDERS_FAIL: return fetchFoldersFail(state, action)

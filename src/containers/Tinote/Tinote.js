@@ -5,15 +5,25 @@ import Menu from "../../components/Menu/Menu"
 import Explorer from "./Explorer/Explorer"
 import NoteEditor from "./NoteEditor/NoteEditor"
 import {connect} from "react-redux"
-import * as action from "../../store/actions/index"
+import * as actions from "../../store/actions/index"
 import {initialNote} from "../../shared/constants"
+import {Redirect} from "react-router-dom"
 
 class Tinote extends Component {
   render() {
+    let authRedirect = null
+    if(!this.props.isAuth) {
+      authRedirect = <Redirect to="/" />
+    }
+
+
     return (
       <div className={classes.Tinote}>
+        {authRedirect}
         <div className={classes.Wrapper}>
-          <Menu toolbarButtonClicked={() => this.props.addNote({
+          <Menu 
+          logout={this.props.onLogout}
+          toolbarButtonClicked={() => this.props.addNote({
             ...initialNote,
             folder: this.props.currentFolder
           })}/>
@@ -27,13 +37,15 @@ class Tinote extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentFolder: state.folders.currentFolder
+    currentFolder: state.folders.currentFolder,
+    isAuth: state.auth.isAuth
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addNote: (note) => dispatch(action.addNote(note))
+    addNote: (note) => dispatch(actions.addNote(note)),
+    onLogout: () => dispatch(actions.logout())
   }
 }
 

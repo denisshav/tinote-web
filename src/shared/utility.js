@@ -18,7 +18,7 @@ export function debounce (fn, time) {
   }
 }
 
-export function isDifferenceBetweenArrays(prevArr, newArr) {
+export function getDifferenceBetweenArrays(prevArr, newArr) {
   if (prevArr === newArr) {
     return {
       isDiffer: false,

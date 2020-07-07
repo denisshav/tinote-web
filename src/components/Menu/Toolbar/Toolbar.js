@@ -6,9 +6,11 @@ import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle"
 import classes from "./Toolbar.module.css"
 
 const toolbar = props => {
+  console.log("toolbar render")
   return (
     <div className={classes.Toolbar}>
-      <DrawerToggle />
+      <DrawerToggle 
+      clicked={props.burgerClicked}/>
       <div className={classes.Search}>
       <Input 
       label={false}

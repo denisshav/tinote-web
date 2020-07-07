@@ -1,14 +1,16 @@
 .Input {
-  height: 100%;
+  height: 30px;
   width: 100%;
   padding: 4px;
   box-sizing: border-box;
+  display: inline-block;
 }
 
 .Label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
+  display: inline-block;
 }
 
 .InputElement {

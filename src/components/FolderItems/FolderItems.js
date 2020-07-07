@@ -8,6 +8,8 @@ const folderItems = props => {
     return <FolderItem
       leftClicked={(event) => props.showContext(event, "folder", folder.id)}
       active={folder.id === props.current}
+      // onRename={props.onRename}
+      // rename={folder.id === props.renameFolderId}
       clicked={() => props.select(folder.id)}
       key={folder.id}
       icon={folder.icon}  

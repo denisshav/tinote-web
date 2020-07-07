@@ -11,6 +11,8 @@ import {initialFolder} from "../../../shared/constants"
 
 class Explorer extends Component {
   state = {
+    renameFolderId: null,
+    renameNoteId: null,
     contextMenu: {
       x: -100,
       y: -100,
@@ -36,13 +38,11 @@ class Explorer extends Component {
     this.updateNotes = debounce(this.updateNotes, 5000)
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("componentDidUpdate")
+  componentDidUpdate(prevProps) {
     if (prevProps.folders !== this.props.folders 
       && prevProps.folders !== []) {
       this.updateFolders()
     }
-
     if (prevProps.notes !== this.props.notes 
       && prevProps.notes !== []) {
       this.updateNotes()
@@ -81,14 +81,19 @@ class Explorer extends Component {
     this.contextMenuHideHandler()
     const elemType = this.state.contextMenu.elemType
     const id = this.state.contextMenu.id
-    console.log(elemType)
     switch (name) {
       case "Delete": 
         if (elemType === "folder") {
-          console.log(123)
           this.props.removeFolder(id)
         } else if (elemType === "note") {
           this.props.moveNoteToTrash(id)
+        }
+        break
+      case "Rename": 
+        if (elemType === "folder") {
+          this.setState({renameFolderId: id})
+        } else if (elemType === "note") {
+          this.setState({renameNoteId: id})
         }
         break
       default:
@@ -96,10 +101,33 @@ class Explorer extends Component {
     }
   }
 
+  renameFolderHandler = (event) => {
+    if (event.type === "blur" 
+      || (event.type === "keypress" 
+      && event.key === "Enter")) 
+    {
+      this.props.renameFolder(this.state.renameFolderId, event.currentTarget.textContent)
+      this.setState({renameFolderId: null})
+    }
+  }
+
+  renameNoteHandler = (event) => {
+    if (event.type === "blur" 
+    || (
+      event.type === "keypress" 
+      && event.key === "Enter")) 
+    {
+      this.props.renameFolder(this.state.renameNoteId, event.currentTarget.textContent)
+      this.setState({renameNoteId: null})
+    }
+  }
+
   render() {
     return (
       <div className={classes.Explorer}>
         <FolderItems 
+          onRename={this.renameFolderHandler}
+          renameFolderId={this.state.renameFolderId}
           showContext={this.contextMenuShowHandler}
           addFolder={() => this.props.addFolder({
             ...initialFolder,
@@ -111,6 +139,8 @@ class Explorer extends Component {
           select={this.props.selectFolder}
           folders={this.props.folders}/>
         <NoteItems 
+          onRename={this.renameNoteHandler}
+          renameNoteId={this.state.renameNoteId}
           showContext={this.contextMenuShowHandler}
           current={this.props.currentNote}
           select={this.props.selectNote}

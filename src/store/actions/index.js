@@ -16,3 +16,11 @@ export {
   fetchFolders,
   updateFolders
 } from "./folders"
+
+export {
+  signIn,
+  signUp,
+  checkAuthState,
+  logout
+} from "./auth"
+

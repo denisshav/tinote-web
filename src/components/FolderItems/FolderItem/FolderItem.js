@@ -9,6 +9,8 @@ const folderItem = props => {
   }
   return (
     <li
+    // onKeyPress={props.onRename}
+    // onBlur={props.onRename}
     onContextMenu={props.leftClicked}
     onClickCapture={props.clicked} 
       className={classNames.join(" ")} style={{color: props.color}}>

@@ -8,12 +8,18 @@ const input = props => {
     label =  <lable className={classes.Label}>{props.label}</lable>
   }
 
+  const inputClasses = [classes.InputElement]
+
+  if (props.invalid) {
+    inputClasses.push(classes.Invalid)
+  }
+
   return (
     <div className={classes.Input}>
       {label}
       <input 
         {...props.elemConfig}
-        className={classes.InputElement}
+        className={inputClasses.join(" ")}
         type={props.type}
         value={props.value}
         onInput={props.onInput}
