@@ -91,7 +91,7 @@ class Auth extends React.Component {
   render() {
     let authRedirect = null
     if (this.props.isAuth) {
-      authRedirect = <Redirect to="/tinote/editor"></Redirect>
+      authRedirect = <Redirect to="/tinote"></Redirect>
     }
 
     let form = <Spinner />
