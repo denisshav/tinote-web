@@ -3,8 +3,7 @@ import React, {Component} from "react"
 import classes from "./NoteEditor.module.css"
 import { connect } from "react-redux"
 import * as actions from "../../../store/actions/index"
-import Spinner from "../../../components/UI/Spinner/Spinner"
-// import { Redirect } from "react-router"
+// import Spinner from "../../../components/UI/Spinner/Spinner"
 import ReactQuill from 'react-quill';
 import NoteEditingToolbar from "../../../components/NoteEditingToolbar/NoteEditingToolbar"
 
@@ -42,10 +41,9 @@ class NoteEditor extends Component {
   }
 
   render() {
-    let quill = <Spinner />
-    //if (this.props.currentNoteItem) {
-      
-      quill = <ReactQuill 
+    //let quill = <Spinner />
+
+    const quill = <ReactQuill 
       modules={quillModules}
       formats={quillFormats}
       readOnly={!this.props.currentNoteItem }
@@ -57,16 +55,13 @@ class NoteEditor extends Component {
       style={{height: "100%"}}
       placeholder="Create note and start writing..."
       onChange={this.handleChange} />
-    //}
+
 
     let noteEditorClasses = [classes.NoteEditor]
 
     if (this.props.isShow) {
       noteEditorClasses.push(classes.ShowEditor)
     }
-
-    
-
     return (
       <div className={noteEditorClasses.join(" ")}>
         <NoteEditingToolbar
