@@ -1,6 +1,7 @@
 import React from "react"
 import NoteItem from "./NoteItem/NoteItem"
 import classes from "./NoteItems.module.css"
+import { stripHtml } from "../../shared/utility"
 
 const NoteItems = props => {
 
@@ -31,7 +32,7 @@ const NoteItems = props => {
     key={note.id}
     clicked={() => props.select(note.id)}
     title={note.title}
-    content={note.content}
+    content={stripHtml(note.content.slice(0, 20))}
     date={note.date}
     />
   })

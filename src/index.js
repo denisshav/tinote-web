@@ -14,6 +14,10 @@ import foldersReducer from "./store/reducers/folders"
 import {BrowserRouter} from "react-router-dom"
 import authReducer from "./store/reducers/auth"
 
+//====================================
+import 'react-quill/dist/quill.snow.css';
+//====================================
+
 const reducers = combineReducers({
     tinote: tinoteReducer,
     notes: notesReducer,
