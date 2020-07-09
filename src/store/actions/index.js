@@ -7,7 +7,6 @@ export {
   fetchNotes,
   updateNotes,
   clearNotesInTrash,
-  applyStyle
 } from "./notes"
 
 export {

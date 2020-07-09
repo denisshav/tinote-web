@@ -7,109 +7,7 @@ import {connect} from "react-redux"
 import * as actions from "../../../store/actions/index"
 import ContextMenu from "../../../components/UI/ContextMenu/ContextMenu"
 import {debounce} from "../../../shared/utility"
-import {initialFolder, ALL_NOTES_ID, TRASH_ID} from "../../../shared/constants"
-import { Link, Redirect } from "react-router-dom"
-
-const folderOptions = [
-  {
-    name: "Rename",
-    action: "Rename"
-  },
-  {
-    name: "Delete",
-    action: "Delete"
-  },
-  {
-    isTable: true,
-    name: "Colors",
-    buttons: [
-      {
-        backgroundColor: "red",
-        action: {backgroundColor: "red"}
-      },
-      {
-        backgroundColor: "blue",
-        action: {backgroundColor: "blue"}
-      },
-      {
-        backgroundColor: "yellow",
-        action: {backgroundColor: "yellow"}
-      },
-      {
-        backgroundColor: "black",
-        action: {backgroundColor: "black"}
-      },
-      {
-        backgroundColor: "red",
-        action: {backgroundColor: "red"}
-      },
-      {
-        backgroundColor: "blue",
-        action: {backgroundColor: "blue"}
-      },
-      {
-        backgroundColor: "yellow",
-        action: {backgroundColor: "yellow"}
-      },
-      {
-        backgroundColor: "black",
-        action: {backgroundColor: "black"}
-      }
-    ]
-  },
-  {
-    isTable: true,
-    name: "Icon",
-    buttons: [
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      },
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      },
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      },
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      },
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      },
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      },
-      {
-        icon: "delete",
-        action: {icon: "delete"}
-      }
-    ]
-  }
-]
-
-const noteOptions = [
-  {
-    name: "Rename",
-    action: "Rename"
-  },
-  {
-    name: "Delete",
-    action: "Delete"
-  }
-]
-
-const trashOptions = [
-  {
-    name: "Clear",
-    action: "Clear"
-  }
-]
+import {initialFolder, ALL_NOTES_ID, TRASH_ID, trashOptions, folderOptions, noteOptions} from "../../../shared/constants"
 
 
 class Explorer extends Component {
@@ -275,8 +173,8 @@ class Explorer extends Component {
           options={
             this.state.contextMenu.elemType === "folder" 
               ? this.state.contextMenu.id === TRASH_ID 
-                ? trashOptions 
-                : folderOptions 
+                ? trashOptions
+                : folderOptions
               : noteOptions
               }/>
       </div>

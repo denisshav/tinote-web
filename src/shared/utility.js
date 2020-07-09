@@ -48,3 +48,11 @@ export function getDifferenceBetweenArrays(prevArr, newArr) {
   // console.log("========")
   return response
 }
+
+export function stripHtml(html)
+{
+   var tmp = document.createElement("DIV");
+   tmp.innerHTML = html;
+   return tmp.textContent || tmp.innerText || "";
+}
+

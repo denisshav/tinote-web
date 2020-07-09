@@ -117,23 +117,23 @@ const clearNotesInTrash = (state, action) => {
   }
 }
 
-const applyStyle = (state, action) => {
-  return {
-    ...state,
-    notes: state.notes.map(n => {
-      if (n.id === action.id) {
-        return {
-          ...n,
-          style: {
-            ...n.style,
-            [Object.keys(action.style)[0]]: action.style[Object.keys(action.style)[0]]
-          }
-        }
-      }
-      return n
-    })
-  }
-}
+// const applyStyle = (state, action) => {
+//   return {
+//     ...state,
+//     notes: state.notes.map(n => {
+//       if (n.id === action.id) {
+//         return {
+//           ...n,
+//           style: {
+//             ...n.style,
+//             [Object.keys(action.style)[0]]: action.style[Object.keys(action.style)[0]]
+//           }
+//         }
+//       }
+//       return n
+//     })
+//   }
+// }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -149,7 +149,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_NOTES_SUCCESS: return updateNotesSuccess(state, action)
     case actionTypes.UPDATE_NOTES_FAIL: return updateNotesFail(state, action)
     case actionTypes.CLEAR_NOTES_IN_TRASH: return clearNotesInTrash(state, action)
-    case actionTypes.APPLY_STYLE: return applyStyle(state, action)
+    // case actionTypes.APPLY_STYLE: return applyStyle(state, action)
     default:
       return state
   }

@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .Active {
@@ -24,6 +25,8 @@
   text-align: start;
   color: rgba(#000, 50%);
   margin: 0;
+  height: 20px;
+  overflow: hidden;
 }
 
 .Date {

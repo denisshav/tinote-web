@@ -83,14 +83,6 @@ export const clearNotesInTrash = () => {
   }
 }
 
-export const applyStyle = (id, style) => {
-  return {
-    type: actionTypes.APPLY_STYLE,
-    id,
-    style
-  }
-}
-
 // export const pushNotesStart = () => {
 //   return {
 //     type: actionTypes.PUSH_NOTES_START
