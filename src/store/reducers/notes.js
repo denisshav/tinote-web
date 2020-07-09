@@ -1,5 +1,6 @@
 import * as actionTypes from "../actions/actionTypes"
 import {updateObject} from "../../shared/utility"
+import { TRASH_ID } from "../../shared/constants"
 
 const initialState = {
   notes: [],
@@ -26,7 +27,7 @@ const moveToTrashNote = (state, action) => {
       if (n.id === action.id) {
         return {
           ...n,
-          folder: "TRASH"
+          folder: TRASH_ID
         }
       }
       return n
@@ -49,8 +50,8 @@ const inputText = (state, action) => {
 }
 
 const renameNote = (state, action) => {
-  console.log("Rename reducer")
-  console.log(action)
+  // console.log("Rename reducer")
+  // console.log(action)
   return updateObject(state, {
     notes: state.notes.map(n => {
       if (n.id === action.id) {
@@ -73,7 +74,8 @@ const fetchNotesStart = (state, action) => {
 
 const fetchNotesSuccess = (state, action) => {
   return updateObject(state, {
-    currentNote: action.notes[0],
+    // currentNote: action.notes.length ? action.notes[0].id : null,
+    currentNote: null,
     notes: action.notes,
     loading: false,
     error: null
@@ -108,6 +110,31 @@ const updateNotesFail = (state, action) => {
   })
 }
 
+const clearNotesInTrash = (state, action) => {
+  return {
+    ...state,
+    notes: state.notes.filter(n => n.folder !== TRASH_ID)
+  }
+}
+
+const applyStyle = (state, action) => {
+  return {
+    ...state,
+    notes: state.notes.map(n => {
+      if (n.id === action.id) {
+        return {
+          ...n,
+          style: {
+            ...n.style,
+            [Object.keys(action.style)[0]]: action.style[Object.keys(action.style)[0]]
+          }
+        }
+      }
+      return n
+    })
+  }
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SELECT_NOTE: return selectNote(state, action)
@@ -121,6 +148,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_NOTES_START: return updateNotesStart(state, action)
     case actionTypes.UPDATE_NOTES_SUCCESS: return updateNotesSuccess(state, action)
     case actionTypes.UPDATE_NOTES_FAIL: return updateNotesFail(state, action)
+    case actionTypes.CLEAR_NOTES_IN_TRASH: return clearNotesInTrash(state, action)
+    case actionTypes.APPLY_STYLE: return applyStyle(state, action)
     default:
       return state
   }

@@ -2,6 +2,7 @@ import React from "react"
 
 import classes from "./FolderItems.module.css"
 import FolderItem from "./FolderItem/FolderItem"
+import { TRASH_ID, UNSORTED_ID, ALL_NOTES_ID } from "../../shared/constants"
 
 const folderItems = props => {
   const jsxFolders = props.folders.map(folder => {
@@ -21,17 +22,17 @@ const folderItems = props => {
   return (
     <ul className={classes.FolderItems}>
       <FolderItem
-        active={null === props.current}
-        clicked={() => props.select(null)}
-        key={"__UNSORTED"}
+        active={UNSORTED_ID === props.current}
+        clicked={() => props.select(UNSORTED_ID)}
+        key={UNSORTED_ID}
         icon={"topic"}  
         color={"#ccc"}  
         name={"Unsorted"}>
       </FolderItem>
       <FolderItem
-        active={"__ALL_NOTES" === props.current}
-        clicked={() => props.select("__ALL_NOTES")}
-        key={"__ALL_NOTES"}
+        active={ALL_NOTES_ID === props.current}
+        clicked={() => props.select(ALL_NOTES_ID)}
+        key={ALL_NOTES_ID}
         icon={"rule_folder"}  
         color={"#ccc"}  
         name={"All"}>
@@ -47,6 +48,17 @@ const folderItems = props => {
         color={"#ccc"}  
         name={"Add folder"}>
       </FolderItem>
+
+      <FolderItem
+      leftClicked={(event) => props.showContext(event, "folder", TRASH_ID)}
+        active={TRASH_ID === props.current}
+        clicked={() => props.select(TRASH_ID)}
+        key={TRASH_ID}
+        icon={"delete"}  
+        color={"#ccc"}  
+        name={"Trash"}>
+      </FolderItem>
+     
     </ul>  
   )   
 }

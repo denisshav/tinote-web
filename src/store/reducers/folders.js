@@ -1,9 +1,10 @@
 import * as actionTypes from "../actions/actionTypes"
 import {updateObject} from "../../shared/utility"
+import { ALL_NOTES_ID } from "../../shared/constants"
 
 const initialState = {
   folders: [],
-  currentFolder: null,
+  currentFolder: ALL_NOTES_ID,
   loading: false,
   error: null
 }
@@ -83,6 +84,35 @@ const updateFoldersFail = (state, action) => {
   })
 }
 
+const changeFolderIcon = (state, action) => {
+  return updateObject(state, {
+    folders: state.folders.map(f => {
+      if (f.id === action.id) {
+        // console.log(f)
+        // console.log(action)
+        return {
+          ...f,
+          icon: action.icon
+        }
+      } 
+      return f
+    })
+  })
+}
+
+const changeFolderColor = (state, action) => {
+  return updateObject(state, {
+    folders: state.folders.map(f => {
+      if (f.id === action.id) {
+        return {
+          ...f,
+          color: action.color
+        }
+      } 
+      return f
+    })
+  })
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -96,6 +126,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_FOLDERS_START: return updateFoldersStart(state, action)
     case actionTypes.UPDATE_FOLDERS_SUCCESS: return updateFoldersSuccess(state, action)
     case actionTypes.UPDATE_FOLDERS_FAIL: return updateFoldersFail(state, action)
+    case actionTypes.CHANGE_FOLDER_ICON: return changeFolderIcon(state, action)
+    case actionTypes.CHANGE_FOLDER_COLOR: return changeFolderColor(state, action)
     default:
       return state
   }

@@ -6,7 +6,7 @@ import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle"
 import classes from "./Toolbar.module.css"
 
 const toolbar = props => {
-  console.log("toolbar render")
+  //console.log("toolbar render")
   return (
     <div className={classes.Toolbar}>
       <DrawerToggle 
@@ -23,7 +23,7 @@ const toolbar = props => {
       <ToolbarButton 
       clicked={props.buttonClicked}
       active={false}
-      btnType={"note_add"}/>
+      btnType={props.btnType}/>
       </div>
     </div>
   )

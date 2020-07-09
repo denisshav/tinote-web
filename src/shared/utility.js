@@ -26,10 +26,10 @@ export function getDifferenceBetweenArrays(prevArr, newArr) {
       deleted: []
     }
   }
-  console.log("========")
-  console.log(prevArr)
-  console.log(newArr)
-  console.log("========")
+  // console.log("========")
+  // console.log(prevArr)
+  // console.log(newArr)
+  // console.log("========")
   const deleted = prevArr.filter(prevObj => {
     return !newArr.some(function(newObj) {
       return prevObj.id === newObj.id;
@@ -44,7 +44,7 @@ export function getDifferenceBetweenArrays(prevArr, newArr) {
     updated: updated,
     deleted: deleted
   }
-  console.log(response)
-  console.log("========")
+  // console.log(response)
+  // console.log("========")
   return response
 }

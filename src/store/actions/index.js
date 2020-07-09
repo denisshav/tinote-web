@@ -5,7 +5,9 @@ export {
   renameNote,
   inputText,
   fetchNotes,
-  updateNotes
+  updateNotes,
+  clearNotesInTrash,
+  applyStyle
 } from "./notes"
 
 export {
@@ -14,7 +16,9 @@ export {
   removeFolder,
   renameFolder,
   fetchFolders,
-  updateFolders
+  updateFolders,
+  changeFolderColor,
+  changeFolderIcon
 } from "./folders"
 
 export {

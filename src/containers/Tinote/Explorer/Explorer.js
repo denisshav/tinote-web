@@ -7,7 +7,110 @@ import {connect} from "react-redux"
 import * as actions from "../../../store/actions/index"
 import ContextMenu from "../../../components/UI/ContextMenu/ContextMenu"
 import {debounce} from "../../../shared/utility"
-import {initialFolder} from "../../../shared/constants"
+import {initialFolder, ALL_NOTES_ID, TRASH_ID} from "../../../shared/constants"
+import { Link, Redirect } from "react-router-dom"
+
+const folderOptions = [
+  {
+    name: "Rename",
+    action: "Rename"
+  },
+  {
+    name: "Delete",
+    action: "Delete"
+  },
+  {
+    isTable: true,
+    name: "Colors",
+    buttons: [
+      {
+        backgroundColor: "red",
+        action: {backgroundColor: "red"}
+      },
+      {
+        backgroundColor: "blue",
+        action: {backgroundColor: "blue"}
+      },
+      {
+        backgroundColor: "yellow",
+        action: {backgroundColor: "yellow"}
+      },
+      {
+        backgroundColor: "black",
+        action: {backgroundColor: "black"}
+      },
+      {
+        backgroundColor: "red",
+        action: {backgroundColor: "red"}
+      },
+      {
+        backgroundColor: "blue",
+        action: {backgroundColor: "blue"}
+      },
+      {
+        backgroundColor: "yellow",
+        action: {backgroundColor: "yellow"}
+      },
+      {
+        backgroundColor: "black",
+        action: {backgroundColor: "black"}
+      }
+    ]
+  },
+  {
+    isTable: true,
+    name: "Icon",
+    buttons: [
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      },
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      },
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      },
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      },
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      },
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      },
+      {
+        icon: "delete",
+        action: {icon: "delete"}
+      }
+    ]
+  }
+]
+
+const noteOptions = [
+  {
+    name: "Rename",
+    action: "Rename"
+  },
+  {
+    name: "Delete",
+    action: "Delete"
+  }
+]
+
+const trashOptions = [
+  {
+    name: "Clear",
+    action: "Clear"
+  }
+]
+
 
 class Explorer extends Component {
   state = {
@@ -20,14 +123,7 @@ class Explorer extends Component {
       elemType: null,
       id: null
     }, 
-    options: [
-      {
-        name: "Rename",
-      },
-      {
-        name: "Delete",
-      }
-    ]
+    
   }
 
   componentDidMount() {
@@ -60,6 +156,7 @@ class Explorer extends Component {
   contextMenuShowHandler = (event, elemType, id) => {
     event.preventDefault()
     const {pageX, pageY} = event
+    // console.log(elemType)
     this.setState({contextMenu: {
       x: pageX,
       y: pageY,
@@ -77,11 +174,11 @@ class Explorer extends Component {
     }})
   }
 
-  contextMenuOptionHandler = (name) => {
+  contextMenuOptionHandler = (action) => {
     this.contextMenuHideHandler()
     const elemType = this.state.contextMenu.elemType
     const id = this.state.contextMenu.id
-    switch (name) {
+    switch (action) {
       case "Delete": 
         if (elemType === "folder") {
           this.props.removeFolder(id)
@@ -96,7 +193,26 @@ class Explorer extends Component {
           this.setState({renameNoteId: id})
         }
         break
+      case "Clear": 
+        if (elemType === "folder") {
+          this.props.onClearNotesInTrash()
+        } else if (elemType === "note") {
+          throw new Error("Trying clear trash when contextMenu.elemType === note")
+        }
+        break
       default:
+        if (Object.keys(action)[0] === "backgroundColor") {
+          this.props.onChangeFolderColor(
+            id, 
+            action["backgroundColor"]
+            )
+        } else if (Object.keys(action)[0] === "icon") {
+          // console.log(action["icon"])
+          this.props.onChangeFolderIcon(
+            id, 
+            action["icon"]
+            )
+        }
         break
     }
   }
@@ -122,6 +238,10 @@ class Explorer extends Component {
     }
   }
 
+  selectNoteHandler = id => {
+      this.props.selectNote(id)
+  }
+
   render() {
     return (
       <div className={classes.Explorer}>
@@ -130,10 +250,7 @@ class Explorer extends Component {
           renameFolderId={this.state.renameFolderId}
           showContext={this.contextMenuShowHandler}
           addFolder={() => this.props.addFolder({
-            ...initialFolder,
-            folder: this.props.currentFolder === "__ALL_NOTES" 
-              ? null 
-              : this.props.currentFolder
+            ...initialFolder
           })}
           current={this.props.currentFolder}
           select={this.props.selectFolder}
@@ -144,16 +261,24 @@ class Explorer extends Component {
           showContext={this.contextMenuShowHandler}
           current={this.props.currentNote}
           select={this.props.selectNote}
-          notes={this.props.currentFolder === "__ALL_NOTES"
-            ? this.props.notes
-            : this.props.notes.filter(n => n.folder === this.props.currentFolder)}/>
+          notes={
+            this.props.currentFolder === ALL_NOTES_ID
+              ? this.props.notes.filter(n => n.folder !== TRASH_ID)
+              : this.props.notes.filter(n => n.folder === this.props.currentFolder)
+            }/>
         <ContextMenu 
           optionHandler={this.contextMenuOptionHandler}
           closed={this.contextMenuHideHandler}
           show={this.state.contextMenu.show}
           x={this.state.contextMenu.x}
           y={this.state.contextMenu.y}
-          options={this.state.options}/>
+          options={
+            this.state.contextMenu.elemType === "folder" 
+              ? this.state.contextMenu.id === TRASH_ID 
+                ? trashOptions 
+                : folderOptions 
+              : noteOptions
+              }/>
       </div>
     )
   }
@@ -176,7 +301,10 @@ const mapDispatchToProps = dispatch => {
     removeFolder: (id) => dispatch(actions.removeFolder(id)),
     fetchFolders: () => dispatch(actions.fetchFolders()),
     updateFolders: (folders) => dispatch(actions.updateFolders(folders)),
-    
+    onChangeFolderColor: (id, color) => dispatch(actions.changeFolderColor(id, color)),
+    onChangeFolderIcon: (id, icon) => dispatch(actions.changeFolderIcon(id, icon)),
+    onClearNotesInTrash: () => dispatch(actions.clearNotesInTrash()),
+
     selectNote: (id) => dispatch(actions.selectNote(id)),
     moveNoteToTrash: (id) => dispatch(actions.moveNoteToTrash(id)),
     renameNote: (id, newName) => dispatch(actions.renameNote(id, newName)),

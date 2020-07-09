@@ -18,6 +18,7 @@ const Menu = props => {
       <Profile profileName={"Name"}/>
       <Toolbar 
       burgerClicked={() => setSideDrawerOpen(!isSideDrawerOpen)}
+      btnType={props.toolbarBtnType}
       buttonClicked={props.toolbarButtonClicked}/>
     </div>
   )

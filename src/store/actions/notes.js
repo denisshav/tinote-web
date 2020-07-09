@@ -68,12 +68,26 @@ export const fetchNotes = () => {
     dispatch(fetchNotesStart())
     FireDB.get("notes")
       .then(response => {
-        console.log(response)
+        // console.log(response)
         dispatch(fetchNotesSuccess(response))
       })
       .catch(error => {
         dispatch(fetchNotesFail(error))
       })
+  }
+}
+
+export const clearNotesInTrash = () => {
+  return {
+    type: actionTypes.CLEAR_NOTES_IN_TRASH
+  }
+}
+
+export const applyStyle = (id, style) => {
+  return {
+    type: actionTypes.APPLY_STYLE,
+    id,
+    style
   }
 }
 
@@ -170,7 +184,7 @@ export const updateNotes = notes => {
     dispatch(updateNotesStart())
     FireDB.save({notes: notes})
       .then(response => {
-        console.log(response)
+        // console.log(response)
         dispatch(updateNotesSuccess(response))
       })
       .catch(error => {

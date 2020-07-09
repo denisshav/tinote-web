@@ -4,9 +4,9 @@ import classes from "./Backdrop.module.css"
 
 const backdrop = props => {
   let backdrop = null
-  console.log("backdrop")
+  // console.log("backdrop")
   if (props.open) {
-    console.log("backdrop open")
+    // console.log("backdrop open")
     backdrop = (
     <div 
       className={classes.Backdrop}

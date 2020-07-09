@@ -34,6 +34,22 @@ export const removeFolder = id => {
   }
 }
 
+export const changeFolderIcon = (id, icon) => {
+  return {
+    type: actionTypes.CHANGE_FOLDER_ICON,
+    id,
+    icon
+  }
+}
+
+export const changeFolderColor = (id, color) => {
+  return {
+    type: actionTypes.CHANGE_FOLDER_COLOR,
+    id,
+    color
+  }
+}
+
 // export const fetchFoldersStart = () => {
 //   return {
 //     type: actionTypes.FETCH_FOLDERS_START
@@ -161,7 +177,7 @@ export const updateFolders = folders => {
     dispatch(updateFoldersStart())
     FireDB.save({folders: folders})
       .then(response => {
-        console.log(response)
+        // console.log(response)
         dispatch(updateFoldersSuccess(response))
       })
       .catch(error => {

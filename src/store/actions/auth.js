@@ -31,7 +31,7 @@ export const signIn = (email, password) => {
     dispatch(authStart())
     auth.signInWithEmailAndPassword(email, password)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         dispatch(authSuccess())
       })
       .catch(error => {
@@ -46,7 +46,7 @@ export const signUp = (email, password) => {
     dispatch(authStart())
     auth.createUserWithEmailAndPassword(email, password)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         dispatch(authSuccess())
       })
       .catch(error => {
