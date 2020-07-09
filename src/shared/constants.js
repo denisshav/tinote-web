@@ -5,8 +5,8 @@ export const initialFolder = {
 }
 
 export const initialNote = {
-  content: "New Note Content",
-  date: "1 min ago",
+  content: "",
+  date: "Not provided",
   title: "New Note"
 }
 

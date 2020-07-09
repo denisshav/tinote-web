@@ -19,7 +19,10 @@ class Tinote extends Component {
     } else {
       this.props.onAddNote({
         ...initialNote,
-        folder: this.props.currentFolder !== ALL_NOTES_ID ? this.props.currentFolder : null
+        date: Date.now(),
+        folder: this.props.currentFolder !== ALL_NOTES_ID 
+          ? this.props.currentFolder 
+          : null
       })
     }
   }
@@ -27,8 +30,6 @@ class Tinote extends Component {
   isMobile = () => {
     return window.innerWidth < 500
   }
-
-
 
   render() {
     let authRedirect = null

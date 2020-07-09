@@ -2,6 +2,7 @@ import React from "react"
 import NoteItem from "./NoteItem/NoteItem"
 import classes from "./NoteItems.module.css"
 import { stripHtml } from "../../shared/utility"
+import moment from "moment"
 
 const NoteItems = props => {
 
@@ -33,7 +34,7 @@ const NoteItems = props => {
     clicked={() => props.select(note.id)}
     title={note.title}
     content={stripHtml(note.content.slice(0, 20))}
-    date={note.date}
+    date={moment(note.date).fromNow()}
     />
   })
 

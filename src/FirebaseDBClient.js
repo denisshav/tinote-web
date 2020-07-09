@@ -61,7 +61,6 @@ export class FirebaseDBClient {
           content: note.content,
           folder: note.folder,
           date: note.date,
-          style: note.style
         })
       })
 
