@@ -103,7 +103,11 @@ class Auth extends React.Component {
             type="password"
             onInput={this.passwordInputHandler}
             invalid={this.state.isPasswordInvalid}
-            error={this.state.isPasswordInvalid ? "Password must be min 6 characters" : null}
+            error={
+              this.state.isPasswordInvalid
+                ? "Password must be min 6 characters"
+                : null
+            }
           />
           <div className={classes.Buttons}>
             <Button type={"submit"}>
