@@ -30,7 +30,7 @@ class NoteEditor extends Component {
   }
 
   handleChange = (value) => {
-    console.log(value)
+    // console.log(value)
     if (this.props.currentNoteItem) {
       this.props.inputText(this.props.currentNoteItem.id, value)
     }
@@ -65,7 +65,7 @@ class NoteEditor extends Component {
     return (
       <div className={noteEditorClasses.join(" ")}>
         <NoteEditingToolbar
-        arrowBackClicked={this.arrowBackHancler}
+        arrowClicked={this.arrowBackHancler}
         toolbarBtnClicked={() => {}}
         buttons={[]}/>
         {quill}
