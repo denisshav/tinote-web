@@ -1,32 +1,28 @@
-import React from "react"
+import React from "react";
 
-import Input from "../../UI/Input/Input"
-import ToolbarButton from "../../UI/ToolbarButton/ToolbarButton"
-import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle"
-import classes from "./Toolbar.module.css"
+import ToolbarButton from "../../UI/ToolbarButton/ToolbarButton";
+import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle";
+import classes from "./Toolbar.module.css";
 
-const toolbar = props => {
-  //console.log("toolbar render")
+const toolbar = (props) => {
   return (
     <div className={classes.Toolbar}>
-      <DrawerToggle 
-      clicked={props.burgerClicked}/>
-      <div className={classes.Search}>
-      <Input 
-      label={false}
-      placeholder={"Search"}
-      value={""}
-      type={"text"}
-      />
-      </div>
+      <DrawerToggle clicked={props.burgerClicked} />
+      
+      <input 
+      className={classes.Search}
+      type="search" 
+      placeholder="Search" />
+
       <div className={classes.Button}>
-      <ToolbarButton 
-      clicked={props.buttonClicked}
-      active={false}
-      btnType={props.btnType}/>
+        <ToolbarButton
+          clicked={props.buttonClicked}
+          active={false}
+          btnType={props.btnType}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default toolbar
+export default toolbar;
