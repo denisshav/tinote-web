@@ -52,7 +52,7 @@ class NoteEditor extends Component {
           ? this.props.currentNoteItem.content 
           : ""
         }
-      style={{height: "100%"}}
+      className={classes.Quill}
       placeholder="Create note and start writing..."
       onChange={this.handleChange} />
 
