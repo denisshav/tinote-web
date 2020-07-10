@@ -29,7 +29,7 @@ export class FirebaseDBClient {
       foldersDiff = getDifferenceBetweenArrays(this.folders, folders)
     }
     if (!notesDiff.isDiffer && !foldersDiff.isDiffer) {
-      console.log("FIREthis.db ISNT DIFFER")
+      // console.log("FIREthis.db ISNT DIFFER")
       return  new Promise(resolve => resolve(true))
     }
 
@@ -75,7 +75,7 @@ export class FirebaseDBClient {
         resolve(response)
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
         reject(error)
       })
     })

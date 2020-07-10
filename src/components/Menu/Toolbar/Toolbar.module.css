@@ -1,8 +1,7 @@
 .Toolbar {
+  background-color: transparent;
   width: 100%;
   height: 100%;
-  background-color: #ccc;
-  padding: 0;
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
@@ -10,23 +9,60 @@
 }
 
 .Search {
-  flex-grow: 2;
+  margin-left: 4px;
+  outline: none;
+	-webkit-appearance: textfield;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+	font-family: inherit;
+  font-size: 100%;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  height: 35px;
+}
+.Search::-webkit-search-decoration,
+.Search::-webkit-search-cancel-button {
+	display: none; 
+}
+
+.Search {
+	background: #606060 url(./../../../assets/icons/search.png) no-repeat 9px center;
+	border: solid 1px #606060;
+	padding: 9px 10px 9px 32px;
+  width: 55px;
+  width: calc(100% - 40px);
+	
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+}
+
+.Search:focus {
+	background-color: #fff;
+	border-color: #66CC75;
+	
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+.Search:-moz-placeholder {
+	color: #999;
+}
+.Search::-webkit-input-placeholder {
+	color: #999;
 }
 
 .Button {
+  margin-right: 4px;
   margin-left: 5px;
-  color: yellow;
   width: 36px;
   text-align: center;
 }
 
 @media (min-width: 800px) {
   .Toolbar {
-    height: 100%;
-    background-color: #ccc;
-    padding: 0;
     width: 50%;
     flex-grow: 2;
-    flex-direction: row;
   }
 }

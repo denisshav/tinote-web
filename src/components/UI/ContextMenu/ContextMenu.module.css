@@ -1,42 +1,39 @@
 .ContextMenu {
-  
-  background-color: salmon;
+  background-color: rgba(236, 240, 241, 1);
   width: 120px;
   z-index: 100;
   box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
   position: fixed;
-  color: wheat;
+  color: #272727;
 }
 
-.Hide { 
+.Hide {
   display: none;
 }
 
 .ContextMenuItems {
   list-style: none;
   padding: 10px 0;
-  z-index: 1;
 }
 
-
 .TableMenu {
-  background-color: salmon;
+  font-size: 0;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  background-color: transparent;
   width: 150px;
   min-height: 30px;
   padding: 0;
   margin: 0;
   list-style: none;
-  z-index: 10;
   display: none;
-  top: -10px;
+  top: 0px;
   position: absolute;
   left: 100%;
 }
 
-.ContextMenuItem:hover > .TableMenu{
+.ContextMenuItem:hover > .TableMenu {
   display: block;
 }
-
 
 .TableMenu li {
   font-size: 0px;
@@ -48,48 +45,18 @@
   list-style: none;
 }
 
-.TableMenu li span{
+.TableMenu li span {
   font-size: 26px;
 }
 
 .ContextMenuItem {
   position: relative;
   font-weight: 500;
-  z-index: 1;
   font-size: 14px;
   padding: 10px 40px 10px 20px;
   cursor: pointer;
 }
 
 .ContextMenuItem:hover {
-  background-color: red;
+  background-color: rgba(225, 229, 230, 1);
 }
-
-/* button{
-  background: grey;
-  border: none;
-  
-  .next{
-    color:green;
-  }
-  
-  &[disabled="false"]:hover{
-    .next{
-      color: red;
-      animation: move 0.5s;
-      animation-iteration-count: 2;
-    }
-  }
-} */
-/* 
-@keyframes move{
-  from{
-    transform: translate(0%);
-  }
-  50%{
-    transform: translate(-40%);
-  }
-  to{
-    transform: transform(0%);
-  }
-} */

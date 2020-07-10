@@ -3,8 +3,9 @@
   padding: 6px;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  background-color: #ddd;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: #dddddd;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -12,7 +13,7 @@
 }
 
 .Active {
-  background-color: wheat;
+  background-color: rgba(52, 152, 219, .1);
 }
 
 .Title {
@@ -23,20 +24,21 @@
 
 .Content {
   text-align: start;
-  color: rgba(#000, 50%);
+  color: rgba(0, 0, 0, 0.8);
   margin: 0;
-  height: 20px;
+  height: 22px;
   overflow: hidden;
 }
 
 .Date {
+  font-size: 0.7em;
   text-align: start;
-  color: rgba(#000, 30%);
+  color: rgba(0, 0, 0, 0.5);
   margin: 0;
 }
 
 @media (min-width: 800px) {
   .NoteItem {
-  padding: 8px;
+    padding: 8px;
   }
 }
