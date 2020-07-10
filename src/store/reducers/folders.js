@@ -88,8 +88,6 @@ const changeFolderIcon = (state, action) => {
   return updateObject(state, {
     folders: state.folders.map(f => {
       if (f.id === action.id) {
-        // console.log(f)
-        // console.log(action)
         return {
           ...f,
           icon: action.icon

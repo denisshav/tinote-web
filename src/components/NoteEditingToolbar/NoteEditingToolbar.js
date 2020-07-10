@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
-import classes from "./NoteEditingToolbar.module.css";
-import ToolbarButton from "../UI/ToolbarButton/ToolbarButton";
+import classes from "./NoteEditingToolbar.module.css"
+import ToolbarButton from "../UI/ToolbarButton/ToolbarButton"
 
-const NoteEditingToolbar = (props) => {
+const NoteEditingToolbar = props => {
   const buttons = props.buttons.map((button, index) => {
     return (
       <ToolbarButton
@@ -12,14 +12,14 @@ const NoteEditingToolbar = (props) => {
         btnType={button.icon}
         clicked={() => {
           if (button.active) {
-            props.toolbarBtnClicked(button.activeAction);
+            props.toolbarBtnClicked(button.activeAction)
           } else {
-            props.toolbarBtnClicked(button.inactiveAction);
+            props.toolbarBtnClicked(button.inactiveAction)
           }
         }}
       />
-    );
-  });
+    )
+  })
 
   return (
     <div className={classes.NoteEditingToolbar}>
@@ -28,7 +28,7 @@ const NoteEditingToolbar = (props) => {
       </div>
       {buttons}
     </div>
-  );
-};
+  )
+}
 
-export default NoteEditingToolbar;
+export default NoteEditingToolbar

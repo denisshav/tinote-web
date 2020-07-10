@@ -11,10 +11,10 @@
 .Search {
   margin-left: 4px;
   outline: none;
-	-webkit-appearance: textfield;
+  -webkit-appearance: textfield;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-	font-family: inherit;
+  font-family: inherit;
   font-size: 100%;
   margin-top: 13px;
   margin-bottom: 13px;
@@ -22,35 +22,36 @@
 }
 .Search::-webkit-search-decoration,
 .Search::-webkit-search-cancel-button {
-	display: none; 
+  display: none;
 }
 
 .Search {
-	background: #606060 url(./../../../assets/icons/search.png) no-repeat 9px center;
-	border: solid 1px #606060;
-	padding: 9px 10px 9px 32px;
+  background: #606060 url(./../../../assets/icons/search.png) no-repeat 9px
+    center;
+  border: solid 1px #606060;
+  padding: 9px 10px 9px 32px;
   width: 55px;
   width: calc(100% - 40px);
-	
-	-webkit-border-radius: 10em;
-	-moz-border-radius: 10em;
-	border-radius: 10em;
+
+  -webkit-border-radius: 10em;
+  -moz-border-radius: 10em;
+  border-radius: 10em;
 }
 
 .Search:focus {
-	background-color: #fff;
-	border-color: #66CC75;
-	
-	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	box-shadow: 0 0 5px rgba(109,207,246,.5);
+  background-color: #fff;
+  border-color: #66cc75;
+
+  -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
 }
 
 .Search:-moz-placeholder {
-	color: #999;
+  color: #999;
 }
 .Search::-webkit-input-placeholder {
-	color: #999;
+  color: #999;
 }
 
 .Button {

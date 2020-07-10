@@ -3,7 +3,7 @@ import classes from "./SideDrawer.module.css"
 import Backdrop from "../../UI/Backdrop/Backdrop"
 
 const sideDrawer = props => {
-  const classNames = [classes.SideDrawer] 
+  const classNames = [classes.SideDrawer]
   if (props.open) {
     classNames.push(classes.Open)
   } else {
@@ -12,13 +12,9 @@ const sideDrawer = props => {
 
   return (
     <div>
-      <Backdrop open={props.open}
-      clicked={props.close}/>
-      <div className={classNames.join(" ")}>
-        {props.children}
-      </div>
+      <Backdrop open={props.open} clicked={props.close} />
+      <div className={classNames.join(" ")}>{props.children}</div>
     </div>
-   
   )
 }
 

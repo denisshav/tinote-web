@@ -10,7 +10,6 @@
 .Wrapper {
   width: 100%;
   display: inline-block;
-  /* //flex-direction: column; */
   height: 100%;
   position: absolute;
   top: 0;
@@ -25,8 +24,7 @@
 }
 
 @media (max-width: 501px) {
-  .ShowEditor  {
+  .ShowEditor {
     transform: translateX(-100%);
   }
 }
-

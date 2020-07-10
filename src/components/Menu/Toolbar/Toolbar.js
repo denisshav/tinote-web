@@ -1,18 +1,15 @@
-import React from "react";
+import React from "react"
 
-import ToolbarButton from "../../UI/ToolbarButton/ToolbarButton";
-import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle";
-import classes from "./Toolbar.module.css";
+import ToolbarButton from "../../UI/ToolbarButton/ToolbarButton"
+import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle"
+import classes from "./Toolbar.module.css"
 
-const toolbar = (props) => {
+const toolbar = props => {
   return (
     <div className={classes.Toolbar}>
       <DrawerToggle clicked={props.burgerClicked} />
-      
-      <input 
-      className={classes.Search}
-      type="search" 
-      placeholder="Search" />
+
+      <input className={classes.Search} type="search" placeholder="Search" />
 
       <div className={classes.Button}>
         <ToolbarButton
@@ -22,7 +19,7 @@ const toolbar = (props) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default toolbar;
+export default toolbar

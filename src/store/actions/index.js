@@ -17,13 +17,7 @@ export {
   fetchFolders,
   updateFolders,
   changeFolderColor,
-  changeFolderIcon
+  changeFolderIcon,
 } from "./folders"
 
-export {
-  signIn,
-  signUp,
-  checkAuthState,
-  logout
-} from "./auth"
-
+export { signIn, signUp, checkAuthState, logout } from "./auth"

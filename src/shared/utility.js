@@ -1,11 +1,11 @@
 export const updateObject = (state, newObject) => {
   return {
     ...state,
-    ...newObject
+    ...newObject,
   }
 }
 
-export function debounce (fn, time) {
+export function debounce(fn, time) {
   let timeout
   return (...args) => {
     const later = () => {
@@ -23,36 +23,29 @@ export function getDifferenceBetweenArrays(prevArr, newArr) {
     return {
       isDiffer: false,
       updated: [],
-      deleted: []
+      deleted: [],
     }
   }
-  // console.log("========")
-  // console.log(prevArr)
-  // console.log(newArr)
-  // console.log("========")
-  const deleted = prevArr.filter(prevObj => {
-    return !newArr.some(function(newObj) {
-      return prevObj.id === newObj.id;
-    });
-  });
 
-  const updated = newArr
-    .filter(newObj => !prevArr.includes(newObj));
+  const deleted = prevArr.filter(prevObj => {
+    return !newArr.some(function (newObj) {
+      return prevObj.id === newObj.id
+    })
+  })
+
+  const updated = newArr.filter(newObj => !prevArr.includes(newObj))
 
   const response = {
     isDiffer: updated.length || deleted.length,
     updated: updated,
-    deleted: deleted
+    deleted: deleted,
   }
-  // console.log(response)
-  // console.log("========")
+
   return response
 }
 
-export function stripHtml(html)
-{
-   var tmp = document.createElement("DIV");
-   tmp.innerHTML = html;
-   return tmp.textContent || tmp.innerText || "";
+export function stripHtml(html) {
+  var tmp = document.createElement("DIV")
+  tmp.innerHTML = html
+  return tmp.textContent || tmp.innerText || ""
 }
-

@@ -1,36 +1,47 @@
-import React, {Component} from "react"
+import React, { Component } from "react"
 
 import classes from "./NoteEditor.module.css"
 import { connect } from "react-redux"
 import * as actions from "../../../store/actions/index"
 // import Spinner from "../../../components/UI/Spinner/Spinner"
-import ReactQuill from 'react-quill';
+import ReactQuill from "react-quill"
 import NoteEditingToolbar from "../../../components/NoteEditingToolbar/NoteEditingToolbar"
 
 const quillModules = {
   toolbar: [
-    [{ 'header': [1, 2, false] }],
-    ['bold', 'italic', 'underline','strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-    ['link', 'image'],
-    ['clean']
+    [{ header: [1, 2, false] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["link", "image"],
+    ["clean"],
   ],
 }
 
 const quillFormats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
 ]
 
 class NoteEditor extends Component {
   state = {
-    text: ""
+    text: "",
   }
 
-  handleChange = (value) => {
-    // console.log(value)
+  handleChange = value => {
     if (this.props.currentNoteItem) {
       this.props.inputText(this.props.currentNoteItem.id, value)
     }
@@ -41,21 +52,19 @@ class NoteEditor extends Component {
   }
 
   render() {
-    //let quill = <Spinner />
-
-    const quill = <ReactQuill 
-      modules={quillModules}
-      formats={quillFormats}
-      readOnly={!this.props.currentNoteItem }
-      value={
-        this.props.currentNoteItem 
-          ? this.props.currentNoteItem.content 
-          : ""
+    const quill = (
+      <ReactQuill
+        modules={quillModules}
+        formats={quillFormats}
+        readOnly={!this.props.currentNoteItem}
+        value={
+          this.props.currentNoteItem ? this.props.currentNoteItem.content : ""
         }
-      className={classes.Quill}
-      placeholder="Create note and start writing..."
-      onChange={this.handleChange} />
-
+        className={classes.Quill}
+        placeholder="Create note and start writing..."
+        onChange={this.handleChange}
+      />
+    )
 
     let noteEditorClasses = [classes.NoteEditor]
 
@@ -65,9 +74,10 @@ class NoteEditor extends Component {
     return (
       <div className={noteEditorClasses.join(" ")}>
         <NoteEditingToolbar
-        arrowClicked={this.arrowBackHancler}
-        toolbarBtnClicked={() => {}}
-        buttons={[]}/>
+          arrowClicked={this.arrowBackHancler}
+          toolbarBtnClicked={() => {}}
+          buttons={[]}
+        />
         {quill}
       </div>
     )
@@ -77,15 +87,17 @@ class NoteEditor extends Component {
 const mapStateToProps = state => {
   return {
     currentNote: state.notes.currentNote,
-    currentNoteItem: state.notes.notes.find(n => n.id === state.notes.currentNote),
-    notes: state.notes.notes
+    currentNoteItem: state.notes.notes.find(
+      n => n.id === state.notes.currentNote
+    ),
+    notes: state.notes.notes,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     inputText: (id, text) => dispatch(actions.inputText(id, text)),
-    selectNote: (id) => dispatch(actions.selectNote(id))
+    selectNote: id => dispatch(actions.selectNote(id)),
   }
 }
 

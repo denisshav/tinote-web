@@ -4,9 +4,7 @@ class Layout extends Component {
   render() {
     return (
       <React.Fragment>
-        <main style={{height: "100%"}}>
-          {this.props.children}
-        </main>
+        <main style={{ height: "100%" }}>{this.props.children}</main>
       </React.Fragment>
     )
   }

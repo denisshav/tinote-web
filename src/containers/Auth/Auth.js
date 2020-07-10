@@ -1,12 +1,12 @@
-import React from "react";
-import Input from "../../components/UI/Input/Input";
-import Button from "../../components/UI/Button/Button";
-import validator from "validator";
-import classes from "./Auth.module.css";
-import * as actions from "../../store/actions/index";
-import { connect } from "react-redux";
-import { Redirect } from "react-router";
-import Spinner from "../../components/UI/Spinner/Spinner";
+import React from "react"
+import Input from "../../components/UI/Input/Input"
+import Button from "../../components/UI/Button/Button"
+import validator from "validator"
+import classes from "./Auth.module.css"
+import * as actions from "../../store/actions/index"
+import { connect } from "react-redux"
+import { Redirect } from "react-router"
+import Spinner from "../../components/UI/Spinner/Spinner"
 
 class Auth extends React.Component {
   state = {
@@ -15,31 +15,31 @@ class Auth extends React.Component {
     isSignin: true,
     emailValue: "",
     passwordValue: "",
-  };
-
-  componentDidMount() {
-    this.props.onCheckAuthState();
   }
 
-  emailInputHandler = (event) => {
+  componentDidMount() {
+    this.props.onCheckAuthState()
+  }
+
+  emailInputHandler = event => {
     if (!validator.isEmail(event.target.value)) {
       if (!this.state.isEmailInvalid) {
         this.setState({
           isEmailInvalid: true,
           emailValue: event.target.value,
-        });
+        })
       }
     } else {
       if (this.state.isEmailInvalid) {
         this.setState({
           isEmailInvalid: false,
           emailValue: event.target.value,
-        });
+        })
       }
     }
-  };
+  }
 
-  passwordInputHandler = (event) => {
+  passwordInputHandler = event => {
     if (
       !validator.isLength(event.target.value, {
         min: 6,
@@ -49,44 +49,44 @@ class Auth extends React.Component {
       this.setState({
         isPasswordInvalid: true,
         passwordValue: event.target.value,
-      });
+      })
     } else {
       this.setState({
         isPasswordInvalid: false,
         passwordValue: event.target.value,
-      });
+      })
     }
-  };
+  }
 
-  sumbitHandler = (e) => {
-    e.preventDefault();
+  sumbitHandler = e => {
+    e.preventDefault()
 
     if (!this.state.isEmailInvalid && !this.state.isPasswordInvalid) {
       if (this.state.isSignin) {
-        this.props.onSignin(this.state.emailValue, this.state.passwordValue);
+        this.props.onSignin(this.state.emailValue, this.state.passwordValue)
       } else {
-        this.props.onSignup(this.state.emailValue, this.state.passwordValue);
+        this.props.onSignup(this.state.emailValue, this.state.passwordValue)
       }
     }
-  };
+  }
 
-  switchModeHandler = (e) => {
-    e.preventDefault();
+  switchModeHandler = e => {
+    e.preventDefault()
 
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
         isSignin: !prevState.isSignin,
-      };
-    });
-  };
+      }
+    })
+  }
 
   render() {
-    let authRedirect = null;
+    let authRedirect = null
     if (this.props.isAuth) {
-      authRedirect = <Redirect to="/tinote"></Redirect>;
+      authRedirect = <Redirect to="/tinote"></Redirect>
     }
 
-    let form = <Spinner />;
+    let form = <Spinner />
 
     if (!this.props.loading) {
       form = (
@@ -118,7 +118,7 @@ class Auth extends React.Component {
             </Button>
           </div>
         </form>
-      );
+      )
     }
 
     return (
@@ -126,23 +126,23 @@ class Auth extends React.Component {
         {authRedirect}
         {form}
       </React.Fragment>
-    );
+    )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isAuth: state.auth.isAuth,
     loading: state.auth.loading,
-  };
-};
+  }
+}
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onSignin: (email, password) => dispatch(actions.signIn(email, password)),
     onSignup: (email, password) => dispatch(actions.signUp(email, password)),
     onCheckAuthState: () => dispatch(actions.checkAuthState()),
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
