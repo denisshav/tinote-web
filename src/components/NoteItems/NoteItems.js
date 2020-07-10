@@ -1,11 +1,10 @@
-import React from "react"
-import NoteItem from "./NoteItem/NoteItem"
-import classes from "./NoteItems.module.css"
-import { stripHtml } from "../../shared/utility"
-import moment from "moment"
+import React from "react";
+import NoteItem from "./NoteItem/NoteItem";
+import classes from "./NoteItems.module.css";
+import { stripHtml } from "../../shared/utility";
+import moment from "moment";
 
-const NoteItems = props => {
-
+const NoteItems = (props) => {
   // const docRefRename = React.createRef()
 
   // useEffect(() => {
@@ -15,9 +14,9 @@ const NoteItems = props => {
   //   }
   // })
 
-  let options = {}
-  const jsxNotes = props.notes.map(note => {
-    options = {}
+  let options = {};
+  const jsxNotes = props.notes.map((note) => {
+    options = {};
     // console.log(props.renameNoteId)
     // if (note.id === props.renameNoteId) {
     //   options = {
@@ -26,23 +25,21 @@ const NoteItems = props => {
     //     ref: docRefRename
     //   }
     // }
-    return <NoteItem 
-    leftClicked={(event) => props.showContext(event, "note", note.id)}
-    active={note.id === props.current}
-    options={options}
-    key={note.id}
-    clicked={() => props.select(note.id)}
-    title={note.title}
-    content={stripHtml(note.content.slice(0, 20))}
-    date={moment(note.date).fromNow()}
-    />
-  })
+    return (
+      <NoteItem
+        leftClicked={(event) => props.showContext(event, "note", note.id)}
+        active={note.id === props.current}
+        options={options}
+        key={note.id}
+        clicked={() => props.select(note.id)}
+        title={note.title}
+        content={stripHtml(note.content.slice(0, 50))}
+        date={moment(note.date).fromNow()}
+      />
+    );
+  });
 
-  return (
-    <ul className={classes.NoteItems}>
-      {jsxNotes}
-    </ul>
-  )
-}
+  return <ul className={classes.NoteItems}>{jsxNotes}</ul>;
+};
 
-export default NoteItems
+export default NoteItems;
