@@ -24,7 +24,7 @@ const input = (props) => {
       onInput={props.onInput}
       placeholder={props.placeholder}
     ></input>
-      <span class={classes.Error}>{props.error}</span>
+      <span className={classes.Error}>{props.error}</span>
   </div>
     
   );
