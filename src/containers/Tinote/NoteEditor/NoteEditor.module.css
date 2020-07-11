@@ -15,7 +15,7 @@
   height: calc(100% - 93px);
 }
 
-@media (min-width: 500px) {
+@media (min-width: 501px) {
   .NoteEditor {
     transform: translateX(66.6%);
     width: 60%;

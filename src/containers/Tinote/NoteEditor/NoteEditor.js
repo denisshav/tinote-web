@@ -39,12 +39,12 @@ const quillFormats = [
 class NoteEditor extends Component {
   handleChange = value => {
     if (this.props.currentNoteItem) {
-      this.props.inputText(this.props.currentNoteItem.id, value)
+      this.props.onInputText(this.props.currentNoteItem.id, value)
     }
   }
 
   arrowBackHancler = () => {
-    this.props.selectNote(null)
+    this.props.onSelectNote(null)
   }
 
   render() {
@@ -92,8 +92,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    inputText: (id, text) => dispatch(actions.inputText(id, text)),
-    selectNote: id => dispatch(actions.selectNote(id)),
+    onInputText: (id, text) => dispatch(actions.inputText(id, text)),
+    onSelectNote: id => dispatch(actions.selectNote(id)),
   }
 }
 

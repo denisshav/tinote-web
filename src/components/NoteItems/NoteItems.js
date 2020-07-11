@@ -5,29 +5,13 @@ import { stripHtml } from "../../shared/utility"
 import moment from "moment"
 
 const NoteItems = props => {
-  // useEffect(() => {
-  //   if(docRefRename && props.renameNoteId) {
-  //     console.log(123)
-  //     docRefRename.current.focus()
-  //   }
-  // })
-
-  let options = {}
   const jsxNotes = props.notes.map(note => {
-    options = {}
-    // console.log(props.renameNoteId)
-    // if (note.id === props.renameNoteId) {
-    //   options = {
-    //     onKeyPress: props.onRename,
-    //     onBlur: props.onRename,
-    //     ref: docRefRename
-    //   }
-    // }
     return (
       <NoteItem
         leftClicked={event => props.showContext(event, "note", note.id)}
         active={note.id === props.current}
-        options={options}
+        onRename={props.onEndRename}
+        rename={note.id === props.renameId}
         key={note.id}
         clicked={() => props.select(note.id)}
         title={note.title}

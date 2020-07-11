@@ -4,7 +4,6 @@ import classes from "./NoteItem.module.css"
 
 const noteItem = props => {
   const classNames = [classes.NoteItem]
-
   if (props.active) {
     classNames.push(classes.Active)
   }
@@ -16,8 +15,9 @@ const noteItem = props => {
       className={classNames.join(" ")}
     >
       <p
-        {...props.options}
         contentEditable={props.rename}
+        onBlur={props.onRename}
+        onKeyPress={props.onRename}
         className={classes.Title}
       >
         {props.title}

@@ -9,15 +9,18 @@ const folderItem = props => {
   }
   return (
     <li
-      // onKeyPress={props.onRename}
-      // onBlur={props.onRename}
+      
       onContextMenu={props.leftClicked}
       onClickCapture={props.clicked}
       className={classNames.join(" ")}
       style={{ color: props.color }}
     >
       <span className={"material-icons " + classes.Icon}>{props.icon}</span>
-      <p className={classes.Name}>{props.name}</p>
+      <p 
+      contentEditable={props.rename}
+      onBlur={props.onRename}
+      onKeyPress={props.onRename}
+      className={classes.Name}>{props.name}</p>
     </li>
   )
 }
