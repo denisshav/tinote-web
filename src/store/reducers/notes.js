@@ -1,12 +1,15 @@
 import * as actionTypes from "../actions/actionTypes"
 import {updateObject} from "../../shared/utility"
 import { TRASH_ID } from "../../shared/constants"
+import _ from "lodash"
 
 const initialState = {
   notes: [],
   currentNote: null,
   loading: false,
-  error: null
+  error: null,
+  lastUpdateFromClient: null,
+  lastUpdateFromServer: null
 }
 
 const selectNote = (state, action) => {
@@ -78,7 +81,8 @@ const fetchNotesSuccess = (state, action) => {
     currentNote: null,
     notes: action.notes,
     loading: false,
-    error: null
+    error: null,
+    lastUpdateFromServer: action.date
   })
 }
 
@@ -92,14 +96,16 @@ const fetchNotesFail = (state, action) => {
 const updateNotesStart = (state, action) => {
   return updateObject(state, {
     loading: true,
-    error: null
+    error: null,
+    lastUpdateFromClient: action.date,
   })
 }
 
 const updateNotesSuccess = (state, action) => {
   return updateObject(state, {
     loading: false,
-    error: null
+    error: null,
+    lastUpdateFromClient: action.date
   })
 }
 
@@ -117,6 +123,13 @@ const clearNotesInTrash = (state, action) => {
   }
 }
 
+const syncNotesFromServer = (state, action) => {
+  return updateObject(state, {
+    lastUpdateFromServer: action.date,
+    notes: _.unionBy(action.updated, state.notes.filter(oldN => !action.deleted.find(delN => delN.id === oldN.id)), "id")
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SELECT_NOTE: return selectNote(state, action)
@@ -131,7 +144,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_NOTES_SUCCESS: return updateNotesSuccess(state, action)
     case actionTypes.UPDATE_NOTES_FAIL: return updateNotesFail(state, action)
     case actionTypes.CLEAR_NOTES_IN_TRASH: return clearNotesInTrash(state, action)
-
+    case actionTypes.SYNC_NOTES_FROM_SERVER: return syncNotesFromServer(state, action)
     default:
       return state
   }

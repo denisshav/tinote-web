@@ -2,11 +2,15 @@ import * as actionTypes from "../actions/actionTypes"
 import {updateObject} from "../../shared/utility"
 import { ALL_NOTES_ID } from "../../shared/constants"
 
+import _ from "lodash"
+
 const initialState = {
   folders: [],
   currentFolder: ALL_NOTES_ID,
   loading: false,
-  error: null
+  error: null,
+  lastUpdateFromClient: null,
+  lastUpdateFromServer: null
 }
 
 const selectFolder = (state, action) => {
@@ -52,7 +56,8 @@ const fetchFoldersSuccess = (state, action) => {
   return updateObject(state, {
     folders: action.folders,
     loading: false,
-    error: null
+    error: null,
+    lastUpdateFromServer: action.date
   })
 }
 
@@ -73,7 +78,8 @@ const updateFoldersStart = (state, action) => {
 const updateFoldersSuccess = (state, action) => {
   return updateObject(state, {
     loading: false,
-    error: null
+    error: null,
+    lastUpdateFromClient: action.date
   })
 }
 
@@ -112,6 +118,13 @@ const changeFolderColor = (state, action) => {
   })
 }
 
+const syncFoldersFromServer = (state, action) => {
+  return updateObject(state, {
+    lastUpdateFromServer: action.date,
+    folders: _.unionBy(action.updated, state.folders.filter(oldF => !action.deleted.find(delF => delF.id === oldF.id)), "id")
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SELECT_FOLDER: return selectFolder(state, action)
@@ -126,6 +139,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_FOLDERS_FAIL: return updateFoldersFail(state, action)
     case actionTypes.CHANGE_FOLDER_ICON: return changeFolderIcon(state, action)
     case actionTypes.CHANGE_FOLDER_COLOR: return changeFolderColor(state, action)
+    case actionTypes.SYNC_FOLDERS_FROM_SERVER: return syncFoldersFromServer(state, action)
     default:
       return state
   }

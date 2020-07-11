@@ -51,6 +51,7 @@ export const fetchNotesSuccess = notes => {
   return {
     type: actionTypes.FETCH_NOTES_SUCCESS,
     notes,
+    date: new Date().getTime()
   }
 }
 
@@ -86,10 +87,10 @@ export const updateNotesStart = () => {
   }
 }
 
-export const updateNotesSuccess = notes => {
+export const updateNotesSuccess = () => {
   return {
     type: actionTypes.UPDATE_NOTES_SUCCESS,
-    notes,
+    date: new Date().getTime()
   }
 }
 
@@ -101,14 +102,34 @@ export const updateNotesFail = error => {
 }
 
 export const updateNotes = notes => {
+  return (dispatch, getState) => {
+    const notesState =  getState().notes
+    if (+notesState.lastUpdateFromClient > +notesState.lastUpdateFromServer) {
+      dispatch(updateNotesStart())
+      FireDB.save({ notes: notes })
+        .then(response => {
+          dispatch(updateNotesSuccess())
+        })
+        .catch(error => {
+          dispatch(updateNotesFail(error))
+        })
+    } else {
+      dispatch(updateNotesSuccess())
+    }
+  }
+}
+
+export const syncNotesFromServer = (updated,  deleted) => {
+  return {
+    type: actionTypes.SYNC_NOTES_FROM_SERVER,
+    updated, 
+    deleted,
+    date: new Date().getTime()
+  }
+}
+
+export const initListenForSyncNotes = () => {
   return dispatch => {
-    dispatch(updateNotesStart())
-    FireDB.save({ notes: notes })
-      .then(response => {
-        dispatch(updateNotesSuccess(response))
-      })
-      .catch(error => {
-        dispatch(updateNotesFail(error))
-      })
+    FireDB.registerNotesListener((updated, deleted) => dispatch(syncNotesFromServer(updated, deleted)))
   }
 }

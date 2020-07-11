@@ -7,6 +7,7 @@ export {
   fetchNotes,
   updateNotes,
   clearNotesInTrash,
+  initListenForSyncNotes
 } from "./notes"
 
 export {
@@ -18,6 +19,7 @@ export {
   updateFolders,
   changeFolderColor,
   changeFolderIcon,
+  initListenForSyncFolders
 } from "./folders"
 
 export { signIn, signUp, checkAuthState, logout } from "./auth"

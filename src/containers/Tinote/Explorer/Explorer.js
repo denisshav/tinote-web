@@ -18,8 +18,8 @@ import {
 
 class Explorer extends Component {
   state = {
-    renameFolderId: null,
-    renameNoteId: null,
+    // renameFolderId: null,
+    // renameNoteId: null,
     contextMenu: {
       x: -100,
       y: -100,
@@ -116,31 +116,31 @@ class Explorer extends Component {
     }
   }
 
-  renameFolderHandler = event => {
-    if (
-      event.type === "blur" ||
-      (event.type === "keypress" && event.key === "Enter")
-    ) {
-      this.props.renameFolder(
-        this.state.renameFolderId,
-        event.currentTarget.textContent
-      )
-      this.setState({ renameFolderId: null })
-    }
-  }
+  // renameFolderHandler = event => {
+  //   if (
+  //     event.type === "blur" ||
+  //     (event.type === "keypress" && event.key === "Enter")
+  //   ) {
+  //     this.props.renameFolder(
+  //       this.state.renameFolderId,
+  //       event.currentTarget.textContent
+  //     )
+  //     this.setState({ renameFolderId: null })
+  //   }
+  // }
 
-  renameNoteHandler = event => {
-    if (
-      event.type === "blur" ||
-      (event.type === "keypress" && event.key === "Enter")
-    ) {
-      this.props.renameFolder(
-        this.state.renameNoteId,
-        event.currentTarget.textContent
-      )
-      this.setState({ renameNoteId: null })
-    }
-  }
+  // renameNoteHandler = event => {
+  //   if (
+  //     event.type === "blur" ||
+  //     (event.type === "keypress" && event.key === "Enter")
+  //   ) {
+  //     this.props.renameFolder(
+  //       this.state.renameNoteId,
+  //       event.currentTarget.textContent
+  //     )
+  //     this.setState({ renameNoteId: null })
+  //   }
+  // }
 
   selectNoteHandler = id => {
     this.props.selectNote(id)

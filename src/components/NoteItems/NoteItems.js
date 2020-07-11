@@ -5,8 +5,6 @@ import { stripHtml } from "../../shared/utility"
 import moment from "moment"
 
 const NoteItems = props => {
-  // const docRefRename = React.createRef()
-
   // useEffect(() => {
   //   if(docRefRename && props.renameNoteId) {
   //     console.log(123)

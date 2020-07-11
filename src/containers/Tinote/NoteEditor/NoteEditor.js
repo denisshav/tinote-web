@@ -37,10 +37,6 @@ const quillFormats = [
 ]
 
 class NoteEditor extends Component {
-  state = {
-    text: "",
-  }
-
   handleChange = value => {
     if (this.props.currentNoteItem) {
       this.props.inputText(this.props.currentNoteItem.id, value)

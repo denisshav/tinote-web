@@ -9,6 +9,36 @@ import * as actions from "../../store/actions/index"
 import { initialNote, TRASH_ID, ALL_NOTES_ID } from "../../shared/constants"
 import { Redirect } from "react-router-dom"
 
+export const ContextMenuContext = React.createContext({
+  contextMenu: {
+    x: -100,
+    y: -100,
+    show: false,
+    elemType: null,
+    id: null,
+  },
+  contextMenuShowHandler: (event, elemType, id) => {
+    event.preventDefault()
+    const { pageX, pageY } = event
+  
+    this.contextMenu = {
+      x: pageX,
+      y: pageY,
+      show: true,
+      elemType,
+      id,
+    }
+  },
+
+  contextMenuHideHandler: () => {
+    this.contextMenu = {
+      x: -100,
+      y: -100,
+      show: false,
+    }
+  }
+});
+
 class Tinote extends Component {
   toolbarNoteHandler = () => {
     if (this.props.isTrashOpen) {
@@ -23,6 +53,19 @@ class Tinote extends Component {
             : null,
       })
     }
+  }
+
+  componentDidMount() {
+    console.log("COMPONENT DID MOUNT")
+    setTimeout(() => {
+      this.props.onInitSyncNotes()
+      this.props.onInitSyncFolders()
+    })
+    
+  }
+
+  componentWillUnmount() {
+    console.log("COMPONENT DID UNMOUNT")
   }
 
   render() {
@@ -69,6 +112,8 @@ const mapDispatchToProps = dispatch => {
     onAddNote: note => dispatch(actions.addNote(note)),
     onLogout: () => dispatch(actions.logout()),
     onClearTrash: () => dispatch(actions.clearNotesInTrash()),
+    onInitSyncNotes: () => dispatch(actions.initListenForSyncNotes()),
+    onInitSyncFolders: () => dispatch(actions.initListenForSyncFolders)
   }
 }
 

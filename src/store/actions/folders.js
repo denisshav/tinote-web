@@ -59,6 +59,7 @@ export const fetchFoldersSuccess = folders => {
   return {
     type: actionTypes.FETCH_FOLDERS_SUCCESS,
     folders,
+    date: new Date().getTime()
   }
 }
 
@@ -88,10 +89,10 @@ export const updateFoldersStart = () => {
   }
 }
 
-export const updateFoldersSuccess = folders => {
+export const updateFoldersSuccess = () => {
   return {
     type: actionTypes.UPDATE_FOLDERS_SUCCESS,
-    folders,
+    date: new Date().getTime()
   }
 }
 
@@ -103,7 +104,9 @@ export const updateFoldersFail = error => {
 }
 
 export const updateFolders = folders => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const foldersState =  getState().folders
+    if (+foldersState.lastUpdateFromClient > +foldersState.lastUpdateFromServer) {
     dispatch(updateFoldersStart())
     FireDB.save({ folders: folders })
       .then(response => {
@@ -112,5 +115,23 @@ export const updateFolders = folders => {
       .catch(error => {
         dispatch(updateFoldersFail(error))
       })
+  } else {
+    dispatch(updateFoldersSuccess())
+  } 
+}
+}
+
+export const syncFoldersFromServer = (updated, deleted) => {
+  return {
+    type: actionTypes.SYNC_FOLDERS_FROM_SERVER,
+    updated,
+    deleted,
+    date: new Date().getTime()
+  }
+}
+
+export const initListenForSyncFolders = () => {
+  return dispatch => {
+    FireDB.registerFoldersListener((updated, deleted) => dispatch(syncFoldersFromServer(updated, deleted)))
   }
 }
