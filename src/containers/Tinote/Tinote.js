@@ -54,12 +54,12 @@ class Tinote extends Component {
         }
       }
     }
-  
+
     this.state = {
       renameContext: {
         type: null,
         id: null,
-        renameEndHandler: this.renameEndHandler
+        renameEndHandler: this.renameEndHandler,
       },
       contextMenu: {
         x: -100,
@@ -70,10 +70,7 @@ class Tinote extends Component {
       },
       isSideDrawerOpen: false,
     }
-
   }
-
-  
 
   contextMenuShowHandler = (event, elemType, id) => {
     event.preventDefault()
@@ -159,14 +156,6 @@ class Tinote extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log("COMPONENT DID MOUNT")
-    setTimeout(() => {
-      this.props.onInitSyncNotes()
-      this.props.onInitSyncFolders()
-    })
-  }
-
   openSideDrawerHandler = () => {
     this.setState({
       isSideDrawerOpen: true,
@@ -249,8 +238,6 @@ const mapDispatchToProps = dispatch => {
     onAddNote: note => dispatch(actions.addNote(note)),
     onLogout: () => dispatch(actions.logout()),
     onClearTrash: () => dispatch(actions.clearNotesInTrash()),
-    onInitSyncNotes: () => dispatch(actions.initListenForSyncNotes()),
-    onInitSyncFolders: () => dispatch(actions.initListenForSyncFolders),
     onChangeFolderColor: (id, color) =>
       dispatch(actions.changeFolderColor(id, color)),
     onChangeFolderIcon: (id, icon) =>
@@ -258,8 +245,9 @@ const mapDispatchToProps = dispatch => {
     onClearNotesInTrash: () => dispatch(actions.clearNotesInTrash()),
     onRemoveFolder: id => dispatch(actions.removeFolder(id)),
     onMoveNoteToTrash: id => dispatch(actions.moveNoteToTrash(id)),
-    onRenameFolder: (id, newName) => dispatch(actions.renameFolder(id, newName)),
-    onRenameNote: (id, newName) => dispatch(actions.renameNote(id, newName))
+    onRenameFolder: (id, newName) =>
+      dispatch(actions.renameFolder(id, newName)),
+    onRenameNote: (id, newName) => dispatch(actions.renameNote(id, newName)),
   }
 }
 

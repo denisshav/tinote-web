@@ -38,11 +38,19 @@ class Explorer extends Component {
   }
 
   updateFolders = () => {
-    this.props.onUpdateFolders(this.props.folders)
+    this.props.onUpdateFolders(
+      this.props.folders,
+      this.props.lastUpdateFromClientFolders,
+      this.props.lastUpdateFromServerFolders
+    )
   }
 
   updateNotes = () => {
-    this.props.onUpdateNotes(this.props.notes)
+    this.props.onUpdateNotes(
+      this.props.notes,
+      this.props.lastUpdateFromClientNotes,
+      this.props.lastUpdateFromServerNotes
+    )
   }
 
   selectNoteHandler = id => {
@@ -69,8 +77,8 @@ class Explorer extends Component {
                 folders={this.props.folders}
               />
               <NoteItems
-                 onEndRename={event => renameEndHandler(event)}
-                 renameId={type === "note" ? id : null}
+                onEndRename={event => renameEndHandler(event)}
+                renameId={type === "note" ? id : null}
                 showContext={this.props.showContextMenu}
                 current={this.props.currentNote}
                 select={this.props.onSelectNote}
@@ -96,6 +104,10 @@ const mapStateToProps = state => {
     currentFolder: state.folders.currentFolder,
     notes: state.notes.notes,
     currentNote: state.notes.currentNote,
+    lastUpdateFromServerFolders: state.folders.lastUpdateFromServer,
+    lastUpdateFromClientFolders: state.folders.lastUpdateFromClient,
+    lastUpdateFromServerNotes: state.notes.lastUpdateFromServer,
+    lastUpdateFromClientNotes: state.notes.lastUpdateFromClient,
   }
 }
 
@@ -107,13 +119,23 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.renameFolder(id, newName)),
 
     onFetchFolders: () => dispatch(actions.fetchFolders()),
-    onUpdateFolders: folders => dispatch(actions.updateFolders(folders)),
+    onUpdateFolders: (folders, lastUpdateFromClient, lastUpdateFromServer) =>
+      dispatch(
+        actions.updateFolders(
+          folders,
+          lastUpdateFromClient,
+          lastUpdateFromServer
+        )
+      ),
 
     onSelectNote: id => dispatch(actions.selectNote(id)),
     onRenameNote: (id, newName) => dispatch(actions.renameNote(id, newName)),
 
     onFetchNotes: () => dispatch(actions.fetchNotes()),
-    onUpdateNotes: notes => dispatch(actions.updateNotes(notes)),
+    onUpdateNotes: (notes, lastUpdateFromClient, lastUpdateFromServer) =>
+      dispatch(
+        actions.updateNotes(notes, lastUpdateFromClient, lastUpdateFromServer)
+      ),
   }
 }
 

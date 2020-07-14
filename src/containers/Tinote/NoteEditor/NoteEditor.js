@@ -7,34 +7,79 @@ import * as actions from "../../../store/actions/index"
 import ReactQuill from "react-quill"
 import NoteEditingToolbar from "../../../components/NoteEditingToolbar/NoteEditingToolbar"
 
-const quillModules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image"],
-    ["clean"],
-  ],
+
+const CustomButton = () => <span className="octicon octicon-star" />
+
+/*
+ * Event handler to be attached using Quill toolbar module
+ * http://quilljs.com/docs/modules/toolbar/
+ */
+function insertStar () {
+  const cursorPosition = this.quill.getSelection().index
+  this.quill.insertText(cursorPosition, "★")
+  this.quill.setSelection(cursorPosition + 1)
 }
 
-const quillFormats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-]
+/*
+ * Custom toolbar component including insertStar button and dropdowns
+ */
+const EditorToolbar = () => (
+  <div id="toolbar">
+    <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
+      <option value="1"></option>
+      <option value="2"></option>
+      <option selected></option>
+    </select>
+    <button className="ql-bold"></button>
+    <button className="ql-italic"></button>
+    <select className="ql-color">
+      <option value="red"></option>
+      <option value="green"></option>
+      <option value="blue"></option>
+      <option value="orange"></option>
+      <option value="violet"></option>
+      <option value="#d0d1d2"></option>
+      <option selected></option>
+    </select>
+    <button className="ql-insertStar">
+      <CustomButton />
+    </button>
+  </div>
+)
+
+/*
+ * Quill editor formats
+ * See http://quilljs.com/docs/formats/
+ */
+
+// const quillModules = {
+//   toolbar: [
+//     [{ header: [1, 2, false] }],
+//     ["bold", "italic", "underline", "strike", "blockquote"],
+//     [
+//       { list: "ordered" },
+//       { list: "bullet" },
+//       { indent: "-1" },
+//       { indent: "+1" },
+//     ],
+//     ["link", "image"],
+//     ["clean"],
+//   ],
+// }
+
+// const quillFormats = [
+//   "header",
+//   "bold",
+//   "italic",
+//   "underline",
+//   "strike",
+//   "blockquote",
+//   "list",
+//   "bullet",
+//   "indent",
+//   "link",
+//   "image",
+// ]
 
 class NoteEditor extends Component {
   handleChange = value => {
@@ -50,8 +95,8 @@ class NoteEditor extends Component {
   render() {
     const quill = (
       <ReactQuill
-        modules={quillModules}
-        formats={quillFormats}
+        modules={NoteEditor.modules}
+        //formats={NoteEditor.formats}
         readOnly={!this.props.currentNoteItem}
         value={
           this.props.currentNoteItem ? this.props.currentNoteItem.content : ""
@@ -74,11 +119,38 @@ class NoteEditor extends Component {
           toolbarBtnClicked={() => {}}
           buttons={[]}
         />
+         <EditorToolbar />
         {quill}
       </div>
     )
   }
 }
+
+NoteEditor.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'color',
+]
+
+/*
+ * PropType validation
+ */
+// NoteEditor.propTypes = {
+//   placeholder: React.PropTypes.string,
+// }
+
+
+NoteEditor.modules = {
+  toolbar: {
+    container: "#toolbar",
+    handlers: {
+      "insertStar": insertStar,
+    }
+  }
+}
+
+
 
 const mapStateToProps = state => {
   return {

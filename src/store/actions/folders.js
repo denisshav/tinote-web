@@ -59,7 +59,7 @@ export const fetchFoldersSuccess = folders => {
   return {
     type: actionTypes.FETCH_FOLDERS_SUCCESS,
     folders,
-    date: new Date().getTime()
+    date: new Date().getTime(),
   }
 }
 
@@ -71,15 +71,8 @@ export const fetchFoldersFail = error => {
 }
 
 export const fetchFolders = () => {
-  return dispatch => {
-    dispatch(fetchFoldersStart())
-    FireDB.get("folders")
-      .then(response => {
-        dispatch(fetchFoldersSuccess(response))
-      })
-      .catch(error => {
-        dispatch(fetchFoldersFail(error))
-      })
+  return {
+    type: actionTypes.FETCH_FOLDERS
   }
 }
 
@@ -92,7 +85,7 @@ export const updateFoldersStart = () => {
 export const updateFoldersSuccess = () => {
   return {
     type: actionTypes.UPDATE_FOLDERS_SUCCESS,
-    date: new Date().getTime()
+    date: new Date().getTime(),
   }
 }
 
@@ -103,22 +96,17 @@ export const updateFoldersFail = error => {
   }
 }
 
-export const updateFolders = folders => {
-  return (dispatch, getState) => {
-    const foldersState =  getState().folders
-    if (+foldersState.lastUpdateFromClient > +foldersState.lastUpdateFromServer) {
-    dispatch(updateFoldersStart())
-    FireDB.save({ folders: folders })
-      .then(response => {
-        dispatch(updateFoldersSuccess(response))
-      })
-      .catch(error => {
-        dispatch(updateFoldersFail(error))
-      })
-  } else {
-    dispatch(updateFoldersSuccess())
-  } 
-}
+export const updateFolders = (
+  folders,
+  lastUpdateFromClient,
+  lastUpdateFromServer
+) => {
+  return {
+    type: actionTypes.UPDATE_FOLDERS,
+    folders,
+    lastUpdateFromClient,
+    lastUpdateFromServer,
+  }
 }
 
 export const syncFoldersFromServer = (updated, deleted) => {
@@ -126,12 +114,6 @@ export const syncFoldersFromServer = (updated, deleted) => {
     type: actionTypes.SYNC_FOLDERS_FROM_SERVER,
     updated,
     deleted,
-    date: new Date().getTime()
-  }
-}
-
-export const initListenForSyncFolders = () => {
-  return dispatch => {
-    FireDB.registerFoldersListener((updated, deleted) => dispatch(syncFoldersFromServer(updated, deleted)))
+    date: new Date().getTime(),
   }
 }

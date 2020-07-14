@@ -1,5 +1,4 @@
 import * as actionTypes from "./actionTypes"
-import auth from "../../myAuth"
 
 export const authSuccess = () => {
   return {
@@ -13,9 +12,15 @@ export const authStart = () => {
   }
 }
 
-export const authLogout = () => {
+export const logoutSucceed = () => {
   return {
     type: actionTypes.AUTH_LOGOUT,
+  }
+}
+
+export const logout = () => {
+  return {
+    type: actionTypes.AUTH_INITIATE_LOGOUT,
   }
 }
 
@@ -27,59 +32,23 @@ export const authFail = error => {
 }
 
 export const signIn = (email, password) => {
-  return dispatch => {
-    dispatch(authStart())
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        dispatch(authSuccess())
-      })
-      .catch(error => {
-        console.log(error)
-        dispatch(authFail(error))
-      })
+  return {
+    type: actionTypes.SIGN_IN,
+    email,
+    password,
   }
 }
 
 export const signUp = (email, password) => {
-  return dispatch => {
-    dispatch(authStart())
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(response => {
-        dispatch(authSuccess())
-      })
-      .catch(error => {
-        console.log(error)
-        dispatch(authFail(error))
-      })
+  return {
+    type: actionTypes.SIGN_UP,
+    email,
+    password,
   }
 }
 
 export const checkAuthState = () => {
-  return dispatch => {
-    dispatch(authStart())
-    auth.onAuthStateChanged(function (user) {
-      if (user) {
-        dispatch(authSuccess())
-      } else {
-        dispatch(authLogout())
-      }
-    })
-  }
-}
-
-export const logout = () => {
-  return dispatch => {
-    dispatch(authStart())
-    auth
-      .signOut()
-      .then(res => {
-        dispatch(authLogout())
-      })
-      .catch(error => {
-        console.log(error)
-        dispatch(authFail(error))
-      })
+  return {
+    type: actionTypes.CHECK_AUTH_STATE,
   }
 }

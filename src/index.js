@@ -1,32 +1,54 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react"
+import ReactDOM from "react-dom"
+import "./index.css"
+import App from "./App"
 
-import {createStore, combineReducers, applyMiddleware, compose} from "redux"
-import {Provider} from "react-redux"
-import thunk from "redux-thunk"
+import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+import { Provider } from "react-redux"
+import createSagaMiddleware from "redux-saga"
 
 import notesReducer from "./store/reducers/notes"
 import foldersReducer from "./store/reducers/folders"
-import {BrowserRouter} from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import authReducer from "./store/reducers/auth"
 
+import { watchAuth, watchFolders, watchNotes } from "./store/sagas/index"
+
+import FireDB from "./FirebaseDBClient"
+import {
+  syncFoldersFromServer,
+  syncNotesFromServer,
+} from "./store/actions/index"
+
 //====================================
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css"
 //====================================
 
 const reducers = combineReducers({
-    notes: notesReducer,
-    folders: foldersReducer,
-    auth: authReducer
-  }
+  notes: notesReducer,
+  folders: foldersReducer,
+  auth: authReducer,
+})
+
+const sagaMiddleware = createSagaMiddleware()
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 )
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+FireDB.registerFoldersListener((updated, deleted) =>
+  store.dispatch(syncFoldersFromServer(updated, deleted))
+)
+FireDB.registerNotesListener((updated, deleted) =>
+  store.dispatch(syncNotesFromServer(updated, deleted))
+)
 
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
-
+sagaMiddleware.run(watchAuth)
+sagaMiddleware.run(watchFolders)
+sagaMiddleware.run(watchNotes)
 
 ReactDOM.render(
   <React.StrictMode>
@@ -36,7 +58,5 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
-);
-
-
+  document.getElementById("root")
+)

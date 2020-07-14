@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes"
-import {updateObject} from "../../shared/utility"
+import { updateObject } from "../../shared/utility"
 import { TRASH_ID } from "../../shared/constants"
 import _ from "lodash"
 
@@ -9,18 +9,18 @@ const initialState = {
   loading: false,
   error: null,
   lastUpdateFromClient: null,
-  lastUpdateFromServer: null
+  lastUpdateFromServer: null,
 }
 
 const selectNote = (state, action) => {
   return updateObject(state, {
-    currentNote: action.id
+    currentNote: action.id,
   })
 }
 
 const addNote = (state, action) => {
   return updateObject(state, {
-    notes: state.notes.concat(action.note)
+    notes: state.notes.concat(action.note),
   })
 }
 
@@ -30,11 +30,11 @@ const moveToTrashNote = (state, action) => {
       if (n.id === action.id) {
         return {
           ...n,
-          folder: TRASH_ID
+          folder: TRASH_ID,
         }
       }
       return n
-    })
+    }),
   })
 }
 
@@ -44,11 +44,11 @@ const inputText = (state, action) => {
       if (n.id === action.id) {
         return {
           ...n,
-          content: action.text
+          content: action.text,
         }
       }
       return n
-    })
+    }),
   })
 }
 
@@ -60,18 +60,18 @@ const renameNote = (state, action) => {
       if (n.id === action.id) {
         return {
           ...n,
-          title: action.newName
+          title: action.newName,
         }
       }
       return n
-    })
+    }),
   })
 }
 
 const fetchNotesStart = (state, action) => {
   return updateObject(state, {
     loading: true,
-    error: null
+    error: null,
   })
 }
 
@@ -82,14 +82,14 @@ const fetchNotesSuccess = (state, action) => {
     notes: action.notes,
     loading: false,
     error: null,
-    lastUpdateFromServer: action.date
+    lastUpdateFromServer: action.date,
   })
 }
 
 const fetchNotesFail = (state, action) => {
   return updateObject(state, {
     loading: false,
-        error: action.error
+    error: action.error,
   })
 }
 
@@ -105,46 +105,65 @@ const updateNotesSuccess = (state, action) => {
   return updateObject(state, {
     loading: false,
     error: null,
-    lastUpdateFromClient: action.date
+    lastUpdateFromClient: action.date,
   })
 }
 
 const updateNotesFail = (state, action) => {
   return updateObject(state, {
     loading: false,
-    error: action.error
+    error: action.error,
   })
 }
 
 const clearNotesInTrash = (state, action) => {
   return {
     ...state,
-    notes: state.notes.filter(n => n.folder !== TRASH_ID)
+    notes: state.notes.filter(n => n.folder !== TRASH_ID),
   }
 }
 
 const syncNotesFromServer = (state, action) => {
   return updateObject(state, {
     lastUpdateFromServer: action.date,
-    notes: _.unionBy(action.updated, state.notes.filter(oldN => !action.deleted.find(delN => delN.id === oldN.id)), "id")
+    notes: _.unionBy(
+      action.updated,
+      state.notes.filter(
+        oldN => !action.deleted.find(delN => delN.id === oldN.id)
+      ),
+      "id"
+    ),
   })
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SELECT_NOTE: return selectNote(state, action)
-    case actionTypes.ADD_NOTE: return addNote(state, action)
-    case actionTypes.MOVE_TO_TRASH_NOTE: return moveToTrashNote(state, action)
-    case actionTypes.INPUT_TEXT: return inputText(state, action)
-    case actionTypes.RENAME_NOTE: return renameNote(state, action)
-    case actionTypes.FETCH_NOTES_START: return fetchNotesStart(state, action)
-    case actionTypes.FETCH_NOTES_SUCCESS:return fetchNotesSuccess(state, action)
-    case actionTypes.FETCH_NOTES_FAIL: return fetchNotesFail(state, action)
-    case actionTypes.UPDATE_NOTES_START: return updateNotesStart(state, action)
-    case actionTypes.UPDATE_NOTES_SUCCESS: return updateNotesSuccess(state, action)
-    case actionTypes.UPDATE_NOTES_FAIL: return updateNotesFail(state, action)
-    case actionTypes.CLEAR_NOTES_IN_TRASH: return clearNotesInTrash(state, action)
-    case actionTypes.SYNC_NOTES_FROM_SERVER: return syncNotesFromServer(state, action)
+    case actionTypes.SELECT_NOTE:
+      return selectNote(state, action)
+    case actionTypes.ADD_NOTE:
+      return addNote(state, action)
+    case actionTypes.MOVE_TO_TRASH_NOTE:
+      return moveToTrashNote(state, action)
+    case actionTypes.INPUT_TEXT:
+      return inputText(state, action)
+    case actionTypes.RENAME_NOTE:
+      return renameNote(state, action)
+    case actionTypes.FETCH_NOTES_START:
+      return fetchNotesStart(state, action)
+    case actionTypes.FETCH_NOTES_SUCCESS:
+      return fetchNotesSuccess(state, action)
+    case actionTypes.FETCH_NOTES_FAIL:
+      return fetchNotesFail(state, action)
+    case actionTypes.UPDATE_NOTES_START:
+      return updateNotesStart(state, action)
+    case actionTypes.UPDATE_NOTES_SUCCESS:
+      return updateNotesSuccess(state, action)
+    case actionTypes.UPDATE_NOTES_FAIL:
+      return updateNotesFail(state, action)
+    case actionTypes.CLEAR_NOTES_IN_TRASH:
+      return clearNotesInTrash(state, action)
+    case actionTypes.SYNC_NOTES_FROM_SERVER:
+      return syncNotesFromServer(state, action)
     default:
       return state
   }

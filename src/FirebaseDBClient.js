@@ -1,7 +1,7 @@
 import { getDifferenceBetweenArrays } from "./shared/utility"
 import firebase from "./myFirebase"
 
-export class FirebaseDBClient {
+class FirebaseDBClient {
   constructor() {
     this.notes = []
     this.folders = []
@@ -11,19 +11,6 @@ export class FirebaseDBClient {
 
   async init() {
     await this.db
-    // this.db.collection("notes").onSnapshot(function (querySnapshot) {
-    //   querySnapshot.docChanges().forEach(function (change) {
-    //     if (change.type === "added") {
-    //       console.log("New city: ", change.doc.data())
-    //     }
-    //     if (change.type === "modified") {
-    //       console.log("Modified city: ", change.doc.data())
-    //     }
-    //     if (change.type === "removed") {
-    //       console.log("Removed city: ", change.doc.data())
-    //     }
-    //   })
-    // })
   }
 
   async _registerListener(collection, listenerFn) {
@@ -33,11 +20,10 @@ export class FirebaseDBClient {
       const deleted = []
       snapshot.docChanges().forEach(change => {
         if (change.type === "removed") {
-          deleted.push({id: change.doc.id })
+          deleted.push({ id: change.doc.id })
         } else {
           updated.push({ ...change.doc.data(), id: change.doc.id })
         }
-        
       })
       listenerFn(updated, deleted)
     })

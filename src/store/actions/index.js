@@ -7,7 +7,13 @@ export {
   fetchNotes,
   updateNotes,
   clearNotesInTrash,
-  initListenForSyncNotes
+  syncNotesFromServer,
+  fetchNotesFail,
+  fetchNotesStart,
+  fetchNotesSuccess,
+  updateNotesFail,
+  updateNotesStart,
+  updateNotesSuccess,
 } from "./notes"
 
 export {
@@ -19,7 +25,22 @@ export {
   updateFolders,
   changeFolderColor,
   changeFolderIcon,
-  initListenForSyncFolders
+  syncFoldersFromServer,
+  fetchFoldersFail,
+  fetchFoldersStart,
+  fetchFoldersSuccess,
+  updateFoldersFail,
+  updateFoldersStart,
+  updateFoldersSuccess,
 } from "./folders"
 
-export { signIn, signUp, checkAuthState, logout } from "./auth"
+export {
+  signIn,
+  signUp,
+  checkAuthState,
+  logout,
+  logoutSucceed,
+  authStart,
+  authSuccess,
+  authFail,
+} from "./auth"

@@ -63,15 +63,8 @@ export const fetchNotesFail = error => {
 }
 
 export const fetchNotes = () => {
-  return dispatch => {
-    dispatch(fetchNotesStart())
-    FireDB.get("notes")
-      .then(response => {
-        dispatch(fetchNotesSuccess(response))
-      })
-      .catch(error => {
-        dispatch(fetchNotesFail(error))
-      })
+  return {
+    type: actionTypes.FETCH_NOTES
   }
 }
 
@@ -101,21 +94,12 @@ export const updateNotesFail = error => {
   }
 }
 
-export const updateNotes = notes => {
-  return (dispatch, getState) => {
-    const notesState =  getState().notes
-    if (+notesState.lastUpdateFromClient > +notesState.lastUpdateFromServer) {
-      dispatch(updateNotesStart())
-      FireDB.save({ notes: notes })
-        .then(response => {
-          dispatch(updateNotesSuccess())
-        })
-        .catch(error => {
-          dispatch(updateNotesFail(error))
-        })
-    } else {
-      dispatch(updateNotesSuccess())
-    }
+export const updateNotes = (notes, lastUpdateFromClient, lastUpdateFromServer) => {
+  return {
+    type: actionTypes.UPDATE_NOTES,
+    notes,
+    lastUpdateFromClient,
+    lastUpdateFromServer
   }
 }
 
@@ -125,11 +109,5 @@ export const syncNotesFromServer = (updated,  deleted) => {
     updated, 
     deleted,
     date: new Date().getTime()
-  }
-}
-
-export const initListenForSyncNotes = () => {
-  return dispatch => {
-    FireDB.registerNotesListener((updated, deleted) => dispatch(syncNotesFromServer(updated, deleted)))
   }
 }
