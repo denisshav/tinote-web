@@ -8,12 +8,12 @@ const NoteItems = props => {
   const jsxNotes = props.notes.map(note => {
     return (
       <NoteItem
-        leftClicked={event => props.showContext(event, "note", note.id)}
-        active={note.id === props.current}
+        leftClicked={event => props.showContext(event, "note", note._id)}
+        active={note._id === props.current}
         onRename={props.onEndRename}
-        rename={note.id === props.renameId}
-        key={note.id}
-        clicked={() => props.select(note.id)}
+        rename={note._id === props.renameId}
+        key={note._id}
+        clicked={() => props.select(note._id)}
         title={note.title}
         content={stripHtml(note.content.slice(0, 50))}
         date={moment(note.date).fromNow()}

@@ -1,7 +1,6 @@
 import * as actionTypes from "../actions/actionTypes"
 import { updateObject } from "../../shared/utility"
 import { TRASH_ID } from "../../shared/constants"
-import _ from "lodash"
 
 const initialState = {
   notes: [],
@@ -14,7 +13,7 @@ const initialState = {
 
 const selectNote = (state, action) => {
   return updateObject(state, {
-    currentNote: action.id,
+    currentNote: action._id,
   })
 }
 
@@ -27,7 +26,7 @@ const addNote = (state, action) => {
 const moveToTrashNote = (state, action) => {
   return updateObject(state, {
     notes: state.notes.map(n => {
-      if (n.id === action.id) {
+      if (n._id === action._id) {
         return {
           ...n,
           folder: TRASH_ID,
@@ -41,7 +40,7 @@ const moveToTrashNote = (state, action) => {
 const inputText = (state, action) => {
   return updateObject(state, {
     notes: state.notes.map(n => {
-      if (n.id === action.id) {
+      if (n._id === action._id) {
         return {
           ...n,
           content: action.text,
@@ -53,11 +52,9 @@ const inputText = (state, action) => {
 }
 
 const renameNote = (state, action) => {
-  // console.log("Rename reducer")
-  // console.log(action)
   return updateObject(state, {
     notes: state.notes.map(n => {
-      if (n.id === action.id) {
+      if (n._id === action._id) {
         return {
           ...n,
           title: action.newName,
@@ -77,7 +74,7 @@ const fetchNotesStart = (state, action) => {
 
 const fetchNotesSuccess = (state, action) => {
   return updateObject(state, {
-    // currentNote: action.notes.length ? action.notes[0].id : null,
+    // currentNote: action.notes.length ? action.notes[0]._id : null,
     currentNote: null,
     notes: action.notes,
     loading: false,
@@ -124,16 +121,17 @@ const clearNotesInTrash = (state, action) => {
 }
 
 const syncNotesFromServer = (state, action) => {
-  return updateObject(state, {
-    lastUpdateFromServer: action.date,
-    notes: _.unionBy(
-      action.updated,
-      state.notes.filter(
-        oldN => !action.deleted.find(delN => delN.id === oldN.id)
-      ),
-      "id"
-    ),
-  })
+  return state
+  // return updateObject(state, {
+  //   lastUpdateFromServer: action.date,
+  //   notes: _.unionBy(
+  //     action.updated,
+  //     state.notes.filter(
+  //       oldN => !action.deleted.find(delN => delN.id === oldN.id)
+  //     ),
+  //     "id"
+  //   ),
+  // })
 }
 
 const reducer = (state = initialState, action) => {
