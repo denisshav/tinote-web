@@ -7,14 +7,13 @@ import * as actions from "../../../store/actions/index"
 import ReactQuill from "react-quill"
 import NoteEditingToolbar from "../../../components/NoteEditingToolbar/NoteEditingToolbar"
 
-
 const CustomButton = () => <span className="octicon octicon-star" />
 
 /*
  * Event handler to be attached using Quill toolbar module
  * http://quilljs.com/docs/modules/toolbar/
  */
-function insertStar () {
+function insertStar() {
   const cursorPosition = this.quill.getSelection().index
   this.quill.insertText(cursorPosition, "★")
   this.quill.setSelection(cursorPosition + 1)
@@ -28,18 +27,18 @@ const EditorToolbar = () => (
     <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
       <option value="1"></option>
       <option value="2"></option>
-      <option selected></option>
+      <option value=""></option>
     </select>
     <button className="ql-bold"></button>
     <button className="ql-italic"></button>
-    <select className="ql-color">
+    <select className="ql-color" defaultValue={""}>
       <option value="red"></option>
       <option value="green"></option>
       <option value="blue"></option>
       <option value="orange"></option>
       <option value="violet"></option>
       <option value="#d0d1d2"></option>
-      <option selected></option>
+      <option value=""></option>
     </select>
     <button className="ql-insertStar">
       <CustomButton />
@@ -119,7 +118,7 @@ class NoteEditor extends Component {
           toolbarBtnClicked={() => {}}
           buttons={[]}
         />
-         <EditorToolbar />
+        <EditorToolbar />
         {quill}
       </div>
     )
@@ -127,10 +126,20 @@ class NoteEditor extends Component {
 }
 
 NoteEditor.formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image', 'color',
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "color",
 ]
 
 /*
@@ -140,17 +149,14 @@ NoteEditor.formats = [
 //   placeholder: React.PropTypes.string,
 // }
 
-
 NoteEditor.modules = {
   toolbar: {
     container: "#toolbar",
     handlers: {
-      "insertStar": insertStar,
-    }
-  }
+      insertStar: insertStar,
+    },
+  },
 }
-
-
 
 const mapStateToProps = state => {
   return {
