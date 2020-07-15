@@ -16,7 +16,7 @@ const input = props => {
         className={inputClasses.join(" ")}
         type={props.type}
         value={props.value}
-        onInput={props.onInput}
+        onChange={props.changed}
         placeholder={props.placeholder}
       ></input>
       <span className={classes.Error}>{props.error}</span>
