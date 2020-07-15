@@ -2,8 +2,6 @@ import * as actionTypes from "../actions/actionTypes"
 import { updateObject } from "../../shared/utility"
 import { ALL_NOTES_ID } from "../../shared/constants"
 
-import _ from "lodash"
-
 const initialState = {
   folders: [],
   currentFolder: ALL_NOTES_ID,
@@ -15,7 +13,7 @@ const initialState = {
 
 const selectFolder = (state, action) => {
   return updateObject(state, {
-    currentFolder: action.id,
+    currentFolder: action._id,
   })
 }
 
@@ -26,15 +24,16 @@ const addFolder = (state, action) => {
 }
 
 const removeFolder = (state, action) => {
+  console.log("removeFolder")
   return updateObject(state, {
-    folders: state.folders.filter(f => f.id !== action.id),
+    folders: state.folders.filter(f => f._id !== action._id),
   })
 }
 
 const renameFolder = (state, action) => {
   return updateObject(state, {
     folders: state.folders.map(n => {
-      if (n.id === action.id) {
+      if (n._id === action._id) {
         return {
           ...n,
           name: action.newName,
@@ -93,7 +92,7 @@ const updateFoldersFail = (state, action) => {
 const changeFolderIcon = (state, action) => {
   return updateObject(state, {
     folders: state.folders.map(f => {
-      if (f.id === action.id) {
+      if (f._id === action._id) {
         return {
           ...f,
           icon: action.icon,
@@ -107,7 +106,7 @@ const changeFolderIcon = (state, action) => {
 const changeFolderColor = (state, action) => {
   return updateObject(state, {
     folders: state.folders.map(f => {
-      if (f.id === action.id) {
+      if (f._id === action._id) {
         return {
           ...f,
           color: action.color,
@@ -119,16 +118,17 @@ const changeFolderColor = (state, action) => {
 }
 
 const syncFoldersFromServer = (state, action) => {
-  return updateObject(state, {
-    lastUpdateFromServer: action.date,
-    folders: _.unionBy(
-      action.updated,
-      state.folders.filter(
-        oldF => !action.deleted.find(delF => delF.id === oldF.id)
-      ),
-      "id"
-    ),
-  })
+  return state
+  // return updateObject(state, {
+  //   lastUpdateFromServer: action.date,
+  //   folders: _.unionBy(
+  //     action.updated,
+  //     state.folders.filter(
+  //       oldF => !action.deleted.find(delF => delF.id === oldF.id)
+  //     ),
+  //     "id"
+  //   ),
+  // })
 }
 
 const reducer = (state = initialState, action) => {
