@@ -29,7 +29,7 @@ export function getDifferenceBetweenArrays(prevArr, newArr) {
 
   const deleted = prevArr.filter(prevObj => {
     return !newArr.some(function (newObj) {
-      return prevObj.id === newObj.id
+      return prevObj._id === newObj._id
     })
   })
 
