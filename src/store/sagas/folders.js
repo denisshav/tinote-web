@@ -1,12 +1,14 @@
 import { put } from "redux-saga/effects"
 import * as actions from "../actions/index"
-import FireDB from "../../FirebaseDBClient"
+import DocsUpdater from "../../DocsUpdater"
+
+const FoldersUpdater = new DocsUpdater("folders")
 
 export function* updateFoldersSaga(action) {
   if (+action.lastUpdateFromClient > +action.lastUpdateFromServer) {
     yield put(actions.updateFoldersStart())
     try {
-      FireDB.save({ folders: action.folders })
+      FoldersUpdater.save(action.folders, localStorage.getItem("token"))
 
       yield put(actions.updateFoldersSuccess())
     } catch (error) {
@@ -20,7 +22,7 @@ export function* updateFoldersSaga(action) {
 export function* fetchFoldersSaga(action) {
   yield put(actions.fetchFoldersStart())
   try {
-    const response = yield FireDB.get("folders")
+    const response = yield FoldersUpdater.get(localStorage.getItem("token"))
     yield put(actions.fetchFoldersSuccess(response))
   } catch (error) {
     yield put(actions.fetchFoldersFail(error))

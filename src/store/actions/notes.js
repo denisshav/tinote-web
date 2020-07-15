@@ -1,42 +1,42 @@
 import * as actionTypes from "./actionTypes"
-import FireDB from "../../FirebaseDBClient"
+import DocsUpdater from "../../DocsUpdater"
 
 export const addNote = note => {
   return {
     type: actionTypes.ADD_NOTE,
     note: {
       ...note,
-      id: FireDB.getId("notes"),
+      _id: DocsUpdater.getId(),
     },
   }
 }
 
-export const selectNote = id => {
+export const selectNote = _id => {
   return {
     type: actionTypes.SELECT_NOTE,
-    id,
+    _id,
   }
 }
 
-export const renameNote = (id, newName) => {
+export const renameNote = (_id, newName) => {
   return {
     type: actionTypes.RENAME_NOTE,
-    id,
+    _id,
     newName,
   }
 }
 
-export const moveNoteToTrash = id => {
+export const moveNoteToTrash = _id => {
   return {
     type: actionTypes.MOVE_TO_TRASH_NOTE,
-    id,
+    _id,
   }
 }
 
-export const inputText = (id, text) => {
+export const inputText = (_id, text) => {
   return {
     type: actionTypes.INPUT_TEXT,
-    id,
+    _id,
     text,
   }
 }
@@ -51,7 +51,7 @@ export const fetchNotesSuccess = notes => {
   return {
     type: actionTypes.FETCH_NOTES_SUCCESS,
     notes,
-    date: new Date().getTime()
+    date: new Date().getTime(),
   }
 }
 
@@ -64,7 +64,7 @@ export const fetchNotesFail = error => {
 
 export const fetchNotes = () => {
   return {
-    type: actionTypes.FETCH_NOTES
+    type: actionTypes.FETCH_NOTES,
   }
 }
 
@@ -83,7 +83,7 @@ export const updateNotesStart = () => {
 export const updateNotesSuccess = () => {
   return {
     type: actionTypes.UPDATE_NOTES_SUCCESS,
-    date: new Date().getTime()
+    date: new Date().getTime(),
   }
 }
 
@@ -94,20 +94,24 @@ export const updateNotesFail = error => {
   }
 }
 
-export const updateNotes = (notes, lastUpdateFromClient, lastUpdateFromServer) => {
+export const updateNotes = (
+  notes,
+  lastUpdateFromClient,
+  lastUpdateFromServer
+) => {
   return {
     type: actionTypes.UPDATE_NOTES,
     notes,
     lastUpdateFromClient,
-    lastUpdateFromServer
+    lastUpdateFromServer,
   }
 }
 
-export const syncNotesFromServer = (updated,  deleted) => {
+export const syncNotesFromServer = (updated, deleted) => {
   return {
     type: actionTypes.SYNC_NOTES_FROM_SERVER,
-    updated, 
+    updated,
     deleted,
-    date: new Date().getTime()
+    date: new Date().getTime(),
   }
 }

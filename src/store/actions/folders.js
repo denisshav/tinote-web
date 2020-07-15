@@ -1,50 +1,51 @@
 import * as actionTypes from "./actionTypes"
-import FireDB from "../../FirebaseDBClient"
+import DocsUpdater from "../../DocsUpdater"
 
 export const addFolder = folder => {
   return {
     type: actionTypes.ADD_FOLDER,
     folder: {
       ...folder,
-      id: FireDB.getId("folders"),
+      _id: DocsUpdater.getId(),
     },
   }
 }
 
-export const selectFolder = id => {
+export const selectFolder = _id => {
   return {
     type: actionTypes.SELECT_FOLDER,
-    id,
+    _id,
   }
 }
 
-export const renameFolder = (id, newName) => {
+export const renameFolder = (_id, newName) => {
   return {
     type: actionTypes.RENAME_FOLDER,
-    id,
+    _id,
     newName,
   }
 }
 
-export const removeFolder = id => {
+export const removeFolder = _id => {
+  console.log("removeFolder")
   return {
     type: actionTypes.REMOVE_FOLDER,
-    id,
+    _id,
   }
 }
 
-export const changeFolderIcon = (id, icon) => {
+export const changeFolderIcon = (_id, icon) => {
   return {
     type: actionTypes.CHANGE_FOLDER_ICON,
-    id,
+    _id,
     icon,
   }
 }
 
-export const changeFolderColor = (id, color) => {
+export const changeFolderColor = (_id, color) => {
   return {
     type: actionTypes.CHANGE_FOLDER_COLOR,
-    id,
+    _id,
     color,
   }
 }
@@ -72,7 +73,7 @@ export const fetchFoldersFail = error => {
 
 export const fetchFolders = () => {
   return {
-    type: actionTypes.FETCH_FOLDERS
+    type: actionTypes.FETCH_FOLDERS,
   }
 }
 

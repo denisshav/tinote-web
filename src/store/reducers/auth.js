@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   error: null,
   isAuth: false,
+  token: null,
 }
 
 const authStart = (state, action) => {
@@ -19,6 +20,7 @@ const authSuccess = (state, action) => {
     error: action.error,
     loading: false,
     isAuth: true,
+    token: action.token,
   })
 }
 
@@ -34,6 +36,7 @@ const authLogout = (state, action) => {
     error: null,
     loading: false,
     isAuth: false,
+    token: null,
   })
 }
 

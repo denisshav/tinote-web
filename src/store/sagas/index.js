@@ -1,5 +1,4 @@
 import { takeEvery, all } from "redux-saga/effects"
-
 import * as actionTypes from "../actions/actionTypes"
 import { logoutSaga, signInSaga, signUpSaga, checkAuthStateSaga } from "./auth"
 import { updateNotesSaga, fetchNotesSaga } from "./notes"

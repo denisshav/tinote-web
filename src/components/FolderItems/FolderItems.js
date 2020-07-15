@@ -8,12 +8,12 @@ const folderItems = props => {
   const jsxFolders = props.folders.map(folder => {
     return (
       <FolderItem
-        leftClicked={event => props.showContext(event, "folder", folder.id)}
-        active={folder.id === props.current}
+        leftClicked={event => props.showContext(event, "folder", folder._id)}
+        active={folder._id === props.current}
         onRename={props.onEndRename}
-        rename={folder.id === props.renameId}
-        clicked={() => props.select(folder.id)}
-        key={folder.id}
+        rename={folder._id === props.renameId}
+        clicked={() => props.select(folder._id)}
+        key={folder._id}
         icon={folder.icon}
         color={folder.color}
         name={folder.name}

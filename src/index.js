@@ -2,23 +2,18 @@ import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
+import { BrowserRouter } from "react-router-dom"
 
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import { Provider } from "react-redux"
-import createSagaMiddleware from "redux-saga"
 
 import notesReducer from "./store/reducers/notes"
 import foldersReducer from "./store/reducers/folders"
-import { BrowserRouter } from "react-router-dom"
 import authReducer from "./store/reducers/auth"
 
-import { watchAuth, watchFolders, watchNotes } from "./store/sagas/index"
+import createSagaMiddleware from "redux-saga"
 
-import FireDB from "./FirebaseDBClient"
-import {
-  syncFoldersFromServer,
-  syncNotesFromServer,
-} from "./store/actions/index"
+import { watchAuth, watchFolders, watchNotes } from "./store/sagas/index"
 
 //====================================
 import "react-quill/dist/quill.snow.css"
@@ -37,13 +32,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   reducers,
   composeEnhancers(applyMiddleware(sagaMiddleware))
-)
-
-FireDB.registerFoldersListener((updated, deleted) =>
-  store.dispatch(syncFoldersFromServer(updated, deleted))
-)
-FireDB.registerNotesListener((updated, deleted) =>
-  store.dispatch(syncNotesFromServer(updated, deleted))
 )
 
 sagaMiddleware.run(watchAuth)

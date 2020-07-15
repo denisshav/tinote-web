@@ -22,21 +22,10 @@ class Auth extends React.Component {
   }
 
   emailInputHandler = event => {
-    if (!validator.isEmail(event.target.value)) {
-      if (!this.state.isEmailInvalid) {
-        this.setState({
-          isEmailInvalid: true,
-          emailValue: event.target.value,
-        })
-      }
-    } else {
-      if (this.state.isEmailInvalid) {
-        this.setState({
-          isEmailInvalid: false,
-          emailValue: event.target.value,
-        })
-      }
-    }
+    this.setState({
+      isEmailInvalid: !validator.isEmail(event.target.value),
+      emailValue: event.target.value,
+    })
   }
 
   passwordInputHandler = event => {
@@ -92,16 +81,18 @@ class Auth extends React.Component {
       form = (
         <form onSubmit={this.sumbitHandler} className={classes.Auth}>
           <Input
+            value={this.state.emailValue}
             placeholder="Email"
             type="text"
-            onInput={this.emailInputHandler}
+            changed={this.emailInputHandler}
             invalid={this.state.isEmailInvalid}
             error={this.state.isEmailInvalid ? "Invalid email" : null}
           />
           <Input
+            value={this.state.passwordValue}
             placeholder="Password"
             type="password"
-            onInput={this.passwordInputHandler}
+            changed={this.passwordInputHandler}
             invalid={this.state.isPasswordInvalid}
             error={
               this.state.isPasswordInvalid
