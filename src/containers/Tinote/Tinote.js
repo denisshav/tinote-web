@@ -180,7 +180,6 @@ class Tinote extends Component {
       isEditorOpen = true
       wrapperStyles.push(classes.ShowEditor)
     }
-    console.log(this.state.renameContext)
     return (
       <div className={classes.Tinote}>
         {authRedirect}

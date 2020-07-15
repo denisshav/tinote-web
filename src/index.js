@@ -2,15 +2,16 @@ import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
+import { BrowserRouter } from "react-router-dom"
 
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import { Provider } from "react-redux"
-import createSagaMiddleware from "redux-saga"
 
 import notesReducer from "./store/reducers/notes"
 import foldersReducer from "./store/reducers/folders"
-import { BrowserRouter } from "react-router-dom"
 import authReducer from "./store/reducers/auth"
+
+import createSagaMiddleware from "redux-saga"
 
 import { watchAuth, watchFolders, watchNotes } from "./store/sagas/index"
 
