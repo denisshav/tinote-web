@@ -102,7 +102,7 @@ class Tinote extends Component {
     } else {
       this.props.onAddNote({
         ...initialNote,
-        date: Date.now(),
+        date: new Date(),
         folder:
           this.props.currentFolder !== ALL_NOTES_ID
             ? this.props.currentFolder

@@ -23,19 +23,21 @@ class Auth extends React.Component {
 
   emailInputHandler = event => {
     if (!validator.isEmail(event.target.value)) {
-      if (!this.state.isEmailInvalid) {
+      console.log(event.target.value)
+      //if (!this.state.isEmailInvalid) {
         this.setState({
           isEmailInvalid: true,
           emailValue: event.target.value,
         })
-      }
+      //}
     } else {
-      if (this.state.isEmailInvalid) {
+      console.log(event.target.value)
+      ///if (this.state.isEmailInvalid) {
         this.setState({
           isEmailInvalid: false,
           emailValue: event.target.value,
         })
-      }
+     /// }
     }
   }
 
@@ -92,6 +94,7 @@ class Auth extends React.Component {
       form = (
         <form onSubmit={this.sumbitHandler} className={classes.Auth}>
           <Input
+            value={this.state.emailValue}
             placeholder="Email"
             type="text"
             onInput={this.emailInputHandler}
@@ -99,6 +102,8 @@ class Auth extends React.Component {
             error={this.state.isEmailInvalid ? "Invalid email" : null}
           />
           <Input
+            value={this.state.passwordValue}
+
             placeholder="Password"
             type="password"
             onInput={this.passwordInputHandler}
