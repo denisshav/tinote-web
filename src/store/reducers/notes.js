@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes"
 import { updateObject } from "../../shared/utility"
 import { TRASH_ID } from "../../shared/constants"
+import _ from "lodash"
 
 const initialState = {
   notes: [],
@@ -121,17 +122,22 @@ const clearNotesInTrash = (state, action) => {
 }
 
 const syncNotesFromServer = (state, action) => {
-  return state
-  // return updateObject(state, {
-  //   lastUpdateFromServer: action.date,
-  //   notes: _.unionBy(
-  //     action.updated,
-  //     state.notes.filter(
-  //       oldN => !action.deleted.find(delN => delN.id === oldN.id)
-  //     ),
-  //     "id"
-  //   ),
-  // })
+  console.log(action)
+  console.log(
+    state.notes.filter(
+      oldN => !action.deletedIds.find(delId => oldN.id === delId)
+    )
+  )
+  return updateObject(state, {
+    lastUpdateFromServer: action.date,
+    notes: _.unionBy(
+      action.updated,
+      state.notes.filter(
+        oldN => !action.deletedIds.find(delId => oldN.id === delId)
+      ),
+      "_id"
+    ),
+  })
 }
 
 const reducer = (state = initialState, action) => {

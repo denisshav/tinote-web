@@ -44,3 +44,5 @@ export {
   authSuccess,
   authFail,
 } from "./auth"
+
+export { initSync } from "./sync"

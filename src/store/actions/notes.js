@@ -107,11 +107,11 @@ export const updateNotes = (
   }
 }
 
-export const syncNotesFromServer = (updated, deleted) => {
+export const syncNotesFromServer = (updated, deletedIds) => {
   return {
     type: actionTypes.SYNC_NOTES_FROM_SERVER,
     updated,
-    deleted,
+    deletedIds,
     date: new Date().getTime(),
   }
 }

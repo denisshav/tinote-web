@@ -14,12 +14,11 @@ export function* signInSaga(action) {
     email: action.email,
     password: action.password,
   }
-
+  console.log(user)
   try {
     const response = yield axios.post("/user/login", user)
-
-    localStorage.setItem("token", response.headers["auth-token"])
-    yield put(actions.authSuccess(response.headers["auth-token"]))
+    localStorage.setItem("token", response.data)
+    yield put(actions.authSuccess(response.data))
   } catch (error) {
     console.log(error.message)
     yield put(actions.authFail(error))
@@ -37,8 +36,8 @@ export function* signUpSaga(action) {
   try {
     const response = yield axios.post("/user/register", user)
 
-    localStorage.setItem("token", response.headers["auth-token"])
-    yield put(actions.authSuccess(response.headers["auth-token"]))
+    localStorage.setItem("token", response.data)
+    yield put(actions.authSuccess(response.data))
   } catch (error) {
     console.log(error)
     yield put(actions.authFail(error))
@@ -47,11 +46,20 @@ export function* signUpSaga(action) {
 
 export function* checkAuthStateSaga(action) {
   yield put(actions.authStart())
-
-  try {
-    yield axios.post("/user/verify?auth=" + localStorage.getItem("token"))
-    yield put(actions.authSuccess(localStorage.getItem("token")))
-  } catch (error) {
+  if (localStorage.getItem("token")) {
+    try {
+      yield axios.post("/user/verify?auth=" + localStorage.getItem("token"))
+      yield put(actions.authSuccess(localStorage.getItem("token")))
+      yield put(
+        actions.initSync(
+          actions.syncNotesFromServer,
+          actions.syncFoldersFromServer
+        )
+      )
+    } catch (error) {
+      yield put(actions.logout())
+    }
+  } else {
     yield put(actions.logout())
   }
 }

@@ -72,6 +72,26 @@ class Tinote extends Component {
     }
   }
 
+  hadnleEvents = () => {
+    const source = new EventSource(
+      "/api/events?auth=" + localStorage.getItem("token")
+    )
+    console.log("init")
+    source.addEventListener(
+      "message",
+      e => {
+        const data = JSON.parse(e.data)
+        console.log(data)
+        if (data.type === "folders") {
+          this.props.onSyncFodlersFromServer(data.docs || [], data.deleteIds || [])
+        } else if (data.type === "notes") {
+          this.props.onSyncNotesFromServer(data.docs || [], data.deleteIds || [])
+        }
+      },
+      false
+    )
+  }
+
   contextMenuShowHandler = (event, elemType, id) => {
     event.preventDefault()
     const { pageX, pageY } = event
@@ -168,6 +188,11 @@ class Tinote extends Component {
     })
   }
 
+  componentDidMount = () => {
+    console.log("componentdid")
+    this.hadnleEvents()
+  }
+
   render() {
     let authRedirect = null
     if (!this.props.isAuth) {
@@ -247,6 +272,10 @@ const mapDispatchToProps = dispatch => {
     onRenameFolder: (id, newName) =>
       dispatch(actions.renameFolder(id, newName)),
     onRenameNote: (id, newName) => dispatch(actions.renameNote(id, newName)),
+    onSyncFoldersFromServer: (updated, deletedIds) =>
+      dispatch(actions.syncFoldersFromServer(updated, deletedIds)),
+    onSyncNotesFromServer: (updated, deletedIds) =>
+      dispatch(actions.syncNotesFromServer(updated, deletedIds)),
   }
 }
 

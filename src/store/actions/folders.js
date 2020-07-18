@@ -110,11 +110,11 @@ export const updateFolders = (
   }
 }
 
-export const syncFoldersFromServer = (updated, deleted) => {
+export const syncFoldersFromServer = (updated, deletedIds) => {
   return {
     type: actionTypes.SYNC_FOLDERS_FROM_SERVER,
     updated,
-    deleted,
+    deletedIds,
     date: new Date().getTime(),
   }
 }

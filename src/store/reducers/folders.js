@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes"
 import { updateObject } from "../../shared/utility"
 import { ALL_NOTES_ID } from "../../shared/constants"
+import _ from "lodash"
 
 const initialState = {
   folders: [],
@@ -118,17 +119,18 @@ const changeFolderColor = (state, action) => {
 }
 
 const syncFoldersFromServer = (state, action) => {
-  return state
-  // return updateObject(state, {
-  //   lastUpdateFromServer: action.date,
-  //   folders: _.unionBy(
-  //     action.updated,
-  //     state.folders.filter(
-  //       oldF => !action.deleted.find(delF => delF.id === oldF.id)
-  //     ),
-  //     "id"
-  //   ),
-  // })
+  console.log(action)
+
+  return updateObject(state, {
+    lastUpdateFromServer: action.date,
+    folders: _.unionBy(
+      action.updated,
+      state.folders.filter(
+        oldF => !action.deletedIds.find(delId => oldF.id === delId)
+      ),
+      "_id"
+    ),
+  })
 }
 
 const reducer = (state = initialState, action) => {

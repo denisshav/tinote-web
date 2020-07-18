@@ -22,11 +22,13 @@ export class DocsUpdater {
     }
 
     return new Promise((resolve, reject) => {
+      const data = {
+        deletedIds: docsDiff.deleted.map(doc => doc._id) || [],
+        docs: docsDiff.updated,
+      }
+      console.log(data)
       axios
-        .put(`/${this.collection}?auth=${token}`, {
-          deletedIds: docsDiff.deleted.map(doc => doc._id),
-          docs: docsDiff.updated,
-        })
+        .put(`/${this.collection}?auth=${token}`, data)
         .then(res => {
           this.docs = docs
           resolve(res)
