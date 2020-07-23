@@ -26,7 +26,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "copy": "cp -r build ../tinote-server/src/",
+    "buildS": "react-scripts build && cp -r build ../tinote-server/src/"
   },
   "eslintConfig": {
     "extends": "react-app"
