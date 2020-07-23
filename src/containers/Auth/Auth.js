@@ -100,6 +100,8 @@ class Auth extends React.Component {
                 : null
             }
           />
+          {this.props.error ? <div className={classes.Error}>{this.props.error}</div> : null}
+
           <div className={classes.Buttons}>
             <Button type={"submit"}>
               {this.state.isSignin ? "Signin" : "Signup"}
@@ -123,6 +125,7 @@ class Auth extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    error: state.auth.error,
     isAuth: state.auth.isAuth,
     loading: state.auth.loading,
   }

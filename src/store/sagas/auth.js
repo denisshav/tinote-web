@@ -14,14 +14,14 @@ export function* signInSaga(action) {
     email: action.email,
     password: action.password,
   }
-  console.log(user)
+
   try {
     const response = yield axios.post("/user/login", user)
     localStorage.setItem("token", response.data)
     yield put(actions.authSuccess(response.data))
   } catch (error) {
-    console.log(error.message)
-    yield put(actions.authFail(error))
+    // console.log(error.message)
+    yield put(actions.authFail("Invalid email or password"))
   }
 }
 
@@ -39,7 +39,7 @@ export function* signUpSaga(action) {
     localStorage.setItem("token", response.data)
     yield put(actions.authSuccess(response.data))
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     yield put(actions.authFail(error))
   }
 }
@@ -49,13 +49,8 @@ export function* checkAuthStateSaga(action) {
   if (localStorage.getItem("token")) {
     try {
       yield axios.post("/user/verify?auth=" + localStorage.getItem("token"))
+
       yield put(actions.authSuccess(localStorage.getItem("token")))
-      yield put(
-        actions.initSync(
-          actions.syncNotesFromServer,
-          actions.syncFoldersFromServer
-        )
-      )
     } catch (error) {
       yield put(actions.logout())
     }
