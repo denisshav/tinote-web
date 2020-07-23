@@ -76,16 +76,22 @@ class Tinote extends Component {
     const source = new EventSource(
       "/api/events?auth=" + localStorage.getItem("token")
     )
-    console.log("init")
+    // console.log("init")
     source.addEventListener(
       "message",
       e => {
         const data = JSON.parse(e.data)
-        console.log(data)
+        // console.log(data)
         if (data.type === "folders") {
-          this.props.onSyncFodlersFromServer(data.docs || [], data.deleteIds || [])
+          this.props.onSyncFodlersFromServer(
+            data.docs || [],
+            data.deleteIds || []
+          )
         } else if (data.type === "notes") {
-          this.props.onSyncNotesFromServer(data.docs || [], data.deleteIds || [])
+          this.props.onSyncNotesFromServer(
+            data.docs || [],
+            data.deleteIds || []
+          )
         }
       },
       false
@@ -189,8 +195,10 @@ class Tinote extends Component {
   }
 
   componentDidMount = () => {
-    console.log("componentdid")
-    this.hadnleEvents()
+    if (this.props.isAuth) {
+      console.log("componentdid")
+      this.hadnleEvents()
+    }
   }
 
   render() {

@@ -26,6 +26,7 @@ export class DocsUpdater {
         deletedIds: docsDiff.deleted.map(doc => doc._id) || [],
         docs: docsDiff.updated,
       }
+      console.log("Saving data")
       console.log(data)
       axios
         .put(`/${this.collection}?auth=${token}`, data)
@@ -34,7 +35,7 @@ export class DocsUpdater {
           resolve(res)
         })
         .catch(error => {
-          console.log(error.message)
+          // console.log(error.message)
           reject(error)
         })
     })

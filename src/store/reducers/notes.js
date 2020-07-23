@@ -122,12 +122,12 @@ const clearNotesInTrash = (state, action) => {
 }
 
 const syncNotesFromServer = (state, action) => {
-  console.log(action)
-  console.log(
-    state.notes.filter(
-      oldN => !action.deletedIds.find(delId => oldN.id === delId)
-    )
-  )
+  // console.log(action)
+  // console.log(
+  //   state.notes.filter(
+  //     oldN => !action.deletedIds.find(delId => oldN.id === delId)
+  //   )
+  // )
   return updateObject(state, {
     lastUpdateFromServer: action.date,
     notes: _.unionBy(

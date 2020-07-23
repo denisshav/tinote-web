@@ -25,7 +25,7 @@ const addFolder = (state, action) => {
 }
 
 const removeFolder = (state, action) => {
-  console.log("removeFolder")
+  // console.log("removeFolder")
   return updateObject(state, {
     folders: state.folders.filter(f => f._id !== action._id),
   })
@@ -119,7 +119,7 @@ const changeFolderColor = (state, action) => {
 }
 
 const syncFoldersFromServer = (state, action) => {
-  console.log(action)
+  // console.log(action)
 
   return updateObject(state, {
     lastUpdateFromServer: action.date,

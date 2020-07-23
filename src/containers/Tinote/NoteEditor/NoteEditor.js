@@ -7,21 +7,15 @@ import * as actions from "../../../store/actions/index"
 import ReactQuill from "react-quill"
 import NoteEditingToolbar from "../../../components/NoteEditingToolbar/NoteEditingToolbar"
 
-const CustomButton = () => <span className="octicon octicon-star" />
+// const CustomButton = () => <span className="octicon octicon-star" />
 
-/*
- * Event handler to be attached using Quill toolbar module
- * http://quilljs.com/docs/modules/toolbar/
- */
-function insertStar() {
-  const cursorPosition = this.quill.getSelection().index
-  this.quill.insertText(cursorPosition, "★")
-  this.quill.setSelection(cursorPosition + 1)
-}
 
-/*
- * Custom toolbar component including insertStar button and dropdowns
- */
+// function insertStar() {
+//   const cursorPosition = this.quill.getSelection().index
+//   this.quill.insertText(cursorPosition, "★")
+//   this.quill.setSelection(cursorPosition + 1)
+// }
+
 const EditorToolbar = () => (
   <div id="toolbar">
     <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
@@ -40,9 +34,9 @@ const EditorToolbar = () => (
       <option value="#d0d1d2"></option>
       <option value=""></option>
     </select>
-    <button className="ql-insertStar">
+    {/* <button className="ql-insertStar">
       <CustomButton />
-    </button>
+    </button> */}
   </div>
 )
 
@@ -83,6 +77,8 @@ const EditorToolbar = () => (
 class NoteEditor extends Component {
   handleChange = value => {
     if (this.props.currentNoteItem) {
+      console.log(value)
+      console.log(this.props.currentNoteItem)
       this.props.onInputText(this.props.currentNoteItem.id, value)
     }
   }
@@ -152,9 +148,9 @@ NoteEditor.formats = [
 NoteEditor.modules = {
   toolbar: {
     container: "#toolbar",
-    handlers: {
-      insertStar: insertStar,
-    },
+    // handlers: {
+    //   insertStar: insertStar,
+    // },
   },
 }
 

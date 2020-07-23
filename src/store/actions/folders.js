@@ -27,7 +27,7 @@ export const renameFolder = (_id, newName) => {
 }
 
 export const removeFolder = _id => {
-  console.log("removeFolder")
+  // console.log("removeFolder")
   return {
     type: actionTypes.REMOVE_FOLDER,
     _id,
